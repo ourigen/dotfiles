@@ -1,0 +1,83 @@
+layer=overlay
+#  Supported values: background, bottom, top, and overlay.
+
+anchor=top-center
+# Supported values: top-right, top-center, top-left, bottom-right, bottom-center, bottom-left, and center.
+
+font=Iosevka Nerd Font Mono 10
+background-color=#24283b
+text-color=#c0caf5
+
+width=325
+# Set width of notification popups.
+# Default: 300
+
+height=200
+# Set maximum height of notification popups. Notifications whose text takes up less space are shrunk to fit.
+# Default: 100
+
+margin=3
+# Set margin of each edge to the size specified by directional. See DIRECTIONAL VALUES for more information.
+# Default: 10
+
+padding=10
+# Set padding on each side to the size specified by directional. See DIRECTIONAL VALUES for more information.
+# Default: 5
+
+border-size=1
+# Set popup border size to px pixels.
+# Default: 1
+
+border-color=#414868
+
+border-radius=2
+# Set popup corner radius to px pixels.
+# Default: 0
+
+# progress-color = [over|source] color
+# Set popup progress indicator color to color. See COLOR for more information. To draw the progress indicator on top
+# of the background color, use the over attribute. To replace the background color, use the source attribute (this
+# can be useful when the notification is semi-transparent).
+# Default: over #5588AAFF
+
+# max-icon-size=32
+# Set maximum icon size to px pixels.
+# Default: 64
+
+# icon-path = path[:path...]
+# Paths to search for icons when a notification specifies a name instead of a full path. Colon-delimited. This
+# approximates the search algorithm used by the XDG Icon Theme Specification, but does not support any of the theme
+# metadata. Therefore, if you want to search parent themes, you will need to add them to the path manually.
+# Default: ""
+
+format=<b>%s</b>\n%b
+# Set notification format string to format. See FORMAT SPECIFIERS for more information. To change this for grouped
+# notifications, set it within a grouped criteria.
+# Default: <b>%s</b>\n%b
+# Default when grouped: (%g) <b>%s</b>\n%b
+# %%   Literal "%"
+# \\   Literal "\"
+# \n   New Line
+# %a   Application name
+# %s   Notification summary
+# %b   Notification body
+# %g   Number of notifications in the current group
+# %h   Number of hidden notifications
+# %t   Total number of notifications
+
+default-timeout=10000
+# Set the default timeout to timeout in milliseconds. To disable the timeout, set it to zero.
+# Default: 0
+
+# ignore-timeout = 0|1
+# If set, mako will ignore the expire timeout sent by notifications and use the one provided by default-timeout
+# instead.
+# Default: 0
+
+group-by=summary
+# A comma-separated list of criteria fields that will be compared to other visible notifications to determine if this
+# one should form a group with them. All listed criteria must be exactly equal for two notifications to group.
+# Default: none
+
+[grouped]
+format=<b>%s</b>\n%b

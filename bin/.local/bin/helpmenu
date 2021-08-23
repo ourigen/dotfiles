@@ -1,0 +1,8 @@
+#!/bin/sh
+# List all man pages, then select through bemenu, and open in popup window
+
+if type wofi > /dev/null; then
+	apropos . | awk '{print $1 " " $2}' | wofi --dmenu | awk '{print "\047" $1 $2 "\047"}' | xargs -r alacritty --class "popup" -e man
+elif type bemenu > /dev/null; then
+	apropos . | bemenu -p "Help" -l 10 | awk '{print "\047" $1 $2 "\047"}' | xargs -r "$TERMINAL" --class "popup" -e man
+fi

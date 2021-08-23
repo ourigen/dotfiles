@@ -1,0 +1,5 @@
+add_newline = false
+
+# `line_break` module separates the prompt into two lines.
+[line_break]
+disabled= true

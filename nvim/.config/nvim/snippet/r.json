@@ -1,0 +1,96 @@
+{
+  "shebang": {
+    "prefix": [
+      "env"
+    ],
+    "body": [
+      "#!/usr/bin/env R"
+    ]
+  },
+  "library": {
+    "prefix": [
+      "lib"
+    ],
+    "body": [
+      "library(${1:package})"
+    ]
+  },
+  "matrix": {
+    "prefix": [
+      "mat"
+    ],
+    "body": [
+      "matrix(${1:data}, nrow = ${2:rows}, ncol = ${3:cols})"
+    ]
+  },
+  "if": {
+    "prefix": [
+      "if"
+    ],
+    "body": [
+      "if (${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "else": {
+    "prefix": [
+      "el"
+    ],
+    "body": [
+      "else {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "else if": {
+    "prefix": [
+      "elif"
+    ],
+    "body": [
+      "elif (${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "for": {
+    "prefix": [
+      "for"
+    ],
+    "body": [
+      "for (${1:variable} in ${2:vector}) {",
+      "\t${0:${TM_SELECTED_TEXT}}",
+      "}"
+    ]
+  },
+  "while": {
+    "prefix": [
+      "wh"
+    ],
+    "body": [
+      "while (${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "function": {
+    "prefix": [
+      "fun"
+    ],
+    "body": [
+      "${1:name} <- function(${2:variables}) {",
+      "\t${0:${TM_SELECTED_TEXT}}",
+      "}"
+    ]
+  },
+  "divider": {
+    "prefix": [
+      "div"
+    ],
+    "body": [
+      "# $1 ---------------------------",
+      "",
+      "$0"
+    ]
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "header": {
+    "prefix": [
+      "#+"
+    ],
+    "body": [
+      "#+TITLE: ${1:${TM_FILENAME}}",
+      "#+AUTHOR: $2",
+      "#+DATE: ${CURRENT_DATE} ${CURRENT_MONTH_NAME} ${CURRENT_YEAR}",
+      "#+DESCRIPTION: $3"
+    ]
+  },
+  "scheduled": {
+    "prefix": [
+      "sched"
+    ],
+    "body": [
+      "SCHEDULED: <${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_DAY_NAME_SHORT} ${CURRENT_HOUR}:${CURRENT_MINUTE}>"
+    ]
+  },
+  "deadline": {
+    "prefix": [
+      "dead"
+    ],
+    "body": [
+      "DEADLINE: <${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_DAY_NAME_SHORT} ${CURRENT_HOUR}:${CURRENT_MINUTE}>"
+    ]
+  },
+  "link": {
+    "prefix": [
+      "link"
+    ],
+    "body": [
+      "[[${1:${CLIPBOARD:path}}][${2:${TM_SELECTED_TEXT:description}}]]"
+    ]
+  },
+  "priority": {
+    "prefix": [
+      "#"
+    ],
+    "body": [
+      "[#${1:A}] "
+    ]
+  },
+  "blockcode": {
+    "prefix": [
+      "<s"
+    ],
+    "body": [
+      "#+BEGIN_SRC ${1: Language}",
+      "${2:${TM_SELECTED_TEXT}}",
+      "#+END_SRC"
+    ]
+  },
+  "todo": {
+    "prefix": [
+      "todo"
+    ],
+    "body": [
+      "* TODO $1",
+      "DEADLINE: <${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_DAY_NAME_SHORT} ${CURRENT_HOUR}:${CURRENT_MINUTE}>",
+      ""
+    ]
+  },
+  "meeting": {
+    "prefix": [
+      "meet"
+    ],
+    "body": [
+      "* MEET with $1",
+      "<${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_DAY_NAME_SHORT} ${CURRENT_HOUR}:${CURRENT_MINUTE}>",
+      ""
+    ]
+  },
+  "table": {
+    "prefix": [
+      "tbl"
+    ],
+    "body": [
+      "| $1 | $2 | $3 |",
+      "|------+------+------|",
+      "|    |    |    |",
+      "|    |    |    |"
+    ]
+  }
+}

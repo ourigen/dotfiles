@@ -1,0 +1,74 @@
+#!/bin/bash
+# Call bemenu/wofi on the given array of choices, effectively acting as a simple file explorer.
+# If the selected choice is a folder, recursively open menu with the folder's contents as choices.
+# If the selection is not a folder - or the current folder, denoted as '.' - attempt to open it with
+# xdg-open or a tool configured via .edmrc-file and write the selection to a history file.
+# The script can also open a terminal at the selected path.
+
+# config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/edm"
+# mkdir -p "$config_dir"
+# mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/edm"
+
+define_standard_settings() {
+	selected_path="$HOME"
+	# history_file="${XDG_DATA_HOME}/edm/history"
+	# max_history_entries=3
+
+	choices=(
+		'<terminal>'
+		# '.'
+		'..'
+		"$(ls --group-directories-first --file-type "$selected_path")"
+		# "$(cat "$history_file")"
+	)
+
+	if [ "$(uname)" == "Darwin" ]; then
+		open_command='open'
+		open_terminal_command='open -a Terminal'
+	else
+		open_command='xdg-open'
+		open_terminal_command="alacritty --working-directory"
+		# open_terminal_command='kitty --directory'
+	fi
+}
+define_standard_settings
+# source "${config_dir}/edmrc" 2>/dev/null
+
+# write_selection_to_history_file() {
+#     sed -i "\:${1}:d" "$history_file"
+#     printf '%s\n' "$1" >> "$history_file"
+#     printf '%s\n' "$(tail -n "$max_history_entries" "$history_file")" > "$history_file"
+# }
+
+while : ; do
+	if type wofi > /dev/null; then
+		menu_result="$(printf '%s\n' "${choices[@]}" | wofi --dmenu -i -p "$selected_path" "$@")" || exit 1
+	elif type bemenu > /dev/null; then
+		menu_result="$(printf '%s\n' "${choices[@]}" | bemenu -i -p "$selected_path" "$@")" || exit 1
+	fi
+
+	if [ "$menu_result" == '<terminal>' ]; then
+		$open_terminal_command "$selected_path"
+		# write_selection_to_history_file "$selected_path"
+		exit 0
+	elif [[ $menu_result == '/'* ]]; then
+		selected_path="$menu_result"
+	elif [[ $menu_result =~ ^(https?|ftps): ]]; then
+		"$open_command" "$menu_result"
+		# write_selection_to_history_file "$menu_result"
+		exit 0
+	else
+		selected_path="$(realpath "${selected_path}/${menu_result}")"
+	fi
+
+	if [ -f "$selected_path" ] || [ "$menu_result" = '.' ]; then
+		"$open_command" "$selected_path"
+		# write_selection_to_history_file "$selected_path"
+		exit 0
+	elif [ -d "$selected_path" ]; then
+		# choices=( '<open terminal here>' '.' '..' "$(ls  --group-directories-first --file-type "$selected_path")")
+		choices=( '<terminal>' '..' "$(ls  --group-directories-first --file-type "$selected_path")")
+	else
+		selected_path="$(dirname "$selected_path")"
+	fi
+done

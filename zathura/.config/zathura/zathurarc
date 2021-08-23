@@ -1,0 +1,59 @@
+# vim: ft=conf
+
+# NOTE: changed 282c34 -> 24283b & abb2bf -> c0caf5
+set default-bg "#24283b"
+set default-fg "#c0caf5"
+
+set statusbar-bg "#24283b"
+set statusbar-fg "#c0caf5"
+
+set inputbar-bg "#24283b"
+set inputbar-fg "#c0caf5"
+
+set notification-bg "#c0caf5"
+set notification-fg "#24283b"
+set notification-error-bg "#f7768e"
+set notification-error-fg "#24283b"
+set notification-warning-bg "#f7768e"
+set notification-warning-fg "#24283b"
+set notification-warning-bg "#e0af68"
+set notification-warning-fg "#24283b"
+
+set highlight-color "#e0af68"
+set highlight-active-color "#7aa2f7"
+
+set completion-group-bg "#354157" # TODO
+set completion-group-fg "#c0caf5"
+set completion-bg "#24283b"
+set completion-fg "#c0caf5"
+set completion-highlight-fg "#24283b"
+set completion-highlight-bg "#7aa2f7"
+
+set recolor-lightcolor "#24283b"
+set recolor-darkcolor "#c0caf5"
+
+set render-loading-bg    "#24283b"
+set render-loading-fg    "#c0caf5"
+
+set index-fg "#c0caf5"
+set index-bg "#24283b"
+set index-active-fg "#24283b"
+set index-active-bg "#7aa2f7"
+
+set font "Iosevka Nerd Font Mono 10"
+set highlight-transparency 0.4
+set n-completion-items 10
+set recolor "true"
+# set recolor-keephue "true"
+# set recolor-reverse-video "true"
+set scroll-step 50
+# set show-hidden "true"
+set show-recent 5
+set scroll-page-aware "true"
+set window-title-basename "true"
+# set statusbar-basename "true"
+set statusbar-home-tilde "true"
+set adjust-open "width"
+set selection-clipboard clipboard
+
+map p print

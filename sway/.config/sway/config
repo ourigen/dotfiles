@@ -1,0 +1,392 @@
+# Read `man 5 sway` for a complete reference.
+
+font pango:Iosevka Nerd Font Mono 10
+
+set {
+	# Theme
+	$wallpaper $HOME/pictures/wallpapers/tokyonight/topography-a9b1d6.jpg
+	$white #c0caf5
+	$black #24283b
+	$gray #414868
+	$red #f7768e
+	$green #9ece6a
+	$cyan #7dcfff
+	$yellow #e0af68
+	$blue #7aa2f7
+	$magenta #bb9af7
+
+	$mod Mod4
+	$left h
+	$down j
+	$up k
+	$right l
+
+	$term alacritty
+
+	$inner_gaps 5
+	$outer_gaps 5
+
+	$laptop eDP-1
+	$monitor HDMI-A-2
+}
+
+gaps {
+	inner $inner_gaps
+	outer $outer_gaps
+}
+
+# OUTPUT {{{
+# swaymsg -t get_outputs
+
+output * background $wallpaper fill
+
+output $laptop {
+	resolution 1920x1080
+	position 0,1080
+}
+output $monitor {
+	resolution 1920x1080
+	position 0,0
+}
+
+workspace {
+	1 output $laptop
+	2 output $laptop
+	3 output $laptop
+	4 output $laptop
+	5 output $laptop
+
+	6 output $monitor
+	7 output $monitor
+	8 output $monitor
+	9 output $monitor
+}
+
+# }}}
+
+# INPUT {{{
+# See man sway-input (5) for details
+# swaymsg -t get_inputs
+
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+	tap enabled
+	drag enabled
+	natural_scroll enabled
+	pointer_accel 0.50
+	# scroll_factor 1.5
+}
+input "2:10:TPPS/2_IBM_TrackPoint" {
+	pointer_accel 0.75
+	# Disable-while-typing
+	dwt enabled
+}
+# controlled by caps2esc
+# remember to systemctl enable --now udevmon.service
+input "1:1:AT_Translated_Set_2_keyboard" {
+	# https://www.mankier.com/7/xkeyboard-config
+	xkb_options ctrl:nocaps
+}
+
+input "9580:110:HUION_420" {
+	# map_to_output $laptop
+	tool_mode * relative
+	# map_from_region 0.22x0.22 0.78x0.78
+}
+# }}}
+
+# Specific window rules for apps
+# app_id are specific to Wayland
+# class are specific to X11
+
+for_window {
+	[class="^.*"] inhibit_idle fullscreen
+	[app_id="^.*"] inhibit_idle fullscreen
+	[app_id="firefox" title="^Picture-in-Picture$"] floating enable, resize set 480px 270px, move position 1420px 768px, sticky enable
+	[app_id="firefox" title="^Firefox — Sharing Indicator$"] floating enable, no_focus, move position -1920px -1080px
+	[app_id="udiskie"] floating enable; resize set 480px 270px; move position center
+	[app_id="popup"] floating enable; sticky enable; resize set 750px 500px; move scratchpad; scratchpad show; move position center
+}
+
+# SWAYBAR {{{
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+	swaybar_command waybar
+	# When the status_command prints a new line to stdout, swaybar updates.
+	# status_command while $XDG_CONFIG_HOME/sway/swaybar.sh; do sleep 60; done
+
+	# position top
+	# status_command i3blocks
+	# pango_markup enabled
+	# separator_symbol '  '
+	# status_padding 0
+	# status_edge_padding 10
+	# # wrap_scroll yes # scrolling through workspaces
+	# # strip_workspace_numbers yes
+	# colors {
+	# 	separator $white
+	# 	statusline $white
+	# 	background $black
+	# 	#                  $border    $background  $textcolor
+	# 	urgent_workspace   $black     $black       $red
+	# 	focused_workspace  $gray  $gray    $white
+	# 	active_workspace   $gray  $gray    $white
+	# 	inactive_workspace $black     $black       $white
+	# 	binding_mode       $red       $red         $black
+	# }
+	# tray_padding 4
+	# tray_bindcode {
+	# 	272 Activate
+	# 	273 ContextMenu
+	# }
+}
+# }}}
+
+# borders only displayed if gaps = 0 and workspace has more than one child
+# smart_borders no_gaps
+# smart_gaps on
+
+# Window borders
+default_border pixel 1
+# disable border for windows spwaned in floating mode (cleaner popup menus)
+default_floating_border none
+titlebar_border_thickness 0
+title_align center
+
+# Colorscheme
+# class                 $border     $backgr.    $text   $indicator  $child_border
+client.focused          $white       $black      $white  $white      $white
+client.focused_inactive $black       $black      $white  $gray      $gray
+client.unfocused        $black       $black      $white  $gray      $gray
+client.urgent           $yellow      $black      $white  $red        $red
+
+# border: The border around the title bar.
+# background: The background of the title bar.
+# text: The text color of the title bar.
+# indicator: The color used to indicate where a new view will open. In a tiled container, this would paint the right border of the current view if a new view would be opened to the right.
+# child_border: The border around the view itself.
+
+# GTK3 https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
+# set $gnome-schema org.gnome.desktop.interface
+# exec_always {
+	# gsettings set $gnome-schema icon-theme 'Qogir-dark'
+	# gsettings set $gnome-schema cursor-theme 'Qogir-cursors'
+	# gsettings set $gnome-schema gtk-theme 'Qogir-dark'
+	# gsettings set $gnome-schema font-name 'Iosevka Nerd Font Mono 10'
+# }
+
+# BINDINGS {{{
+
+bindsym {
+	$mod+q kill
+	$mod+Shift+c reload
+}
+
+# Hotkeys
+bindsym {
+	$mod+Return exec $term
+	# Note: pass the final command to swaymsg so that the resulting window can be opened on the original workspace that the command was run on.
+	$mod+space exec wofi --show run | xargs swaymsg exec --
+	$mod+w exec firefox
+	$mod+n exec $term -e nnn
+	$mod+m exec $term -e ncmpcpp
+	# Quick terminal
+	$mod+Shift+space exec $term --class "popup"
+
+	# bemenu scripts
+	$mod+bracketleft exec webmenu
+	$mod+bracketright exec helpmenu
+	$mod+p exec filemenu
+	$mod+backslash exec killmenu
+	# Alt-tab to switch window focus
+	# Mod1+Tab exec bemenu-window_select
+
+	Print exec "grimshot --notify save screen $HOME/pictures/screenshots/screen-$(date +'%Y-%m-%d_%H%M%S').png"
+	Shift+Print exec sway-recorder
+
+	# use --locked so the keys can be accessed while sway is locked
+
+	# barify version with display bar
+	--locked XF86MonBrightnessUp exec barify brightness up
+	--locked XF86MonBrightnessDown exec barify brightness down
+	--locked XF86AudioRaiseVolume exec barify volume up
+	--locked XF86AudioLowerVolume exec barify volume down
+
+	# --locked XF86MonBrightnessUp exec brightnessctl -q set 2%+
+	# --locked XF86MonBrightnessDown exec brightnessctl -q set 2%-
+	# --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+	# --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+	--locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+	--locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+	--locked XF86AudioNext exec mpc next
+	--locked XF86AudioPrev exec mpc prev
+	--locked XF86AudioPause exec mpc pause
+	--locked XF86AudioPlay exec mpc play
+
+	--locked $mod+Shift+backslash exec mpc toggle
+	--locked $mod+Shift+bracketleft exec mpc prev
+	--locked $mod+Shift+bracketright exec mpc next
+
+}
+
+# Disable laptop screen when lid is closed
+bindswitch {
+	--reload --locked lid:on output $laptop disable
+	--reload --locked lid:off output $laptop enable
+}
+# }}}
+
+# LAYOUTS {{{
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Container management
+bindsym {
+	# Toggle the current focus between tiling and floating mode
+	$mod+f floating toggle
+
+	# Swap focus between the tiling area and the floating area
+	$mod+Shift+f focus mode_toggle
+
+	# Move your focus around
+	$mod+$left focus left
+	$mod+$down focus down
+	$mod+$up focus up
+	$mod+$right focus right
+
+	# Move the focused window
+	$mod+Shift+$left move left
+	$mod+Shift+$down move down
+	$mod+Shift+$up move up
+	$mod+Shift+$right move right
+
+	# Resizing containers:
+	$mod+Ctrl+$left resize shrink width 25px
+	$mod+Ctrl+$right resize grow width 25px
+	$mod+Ctrl+$up resize grow height 10px
+	$mod+Ctrl+$down resize shrink height 10px
+
+	# Resizing gaps
+	$mod+Ctrl+m gaps inner all set 0,gaps outer all set 0
+	$mod+Ctrl+n gaps inner all set $inner_gaps,gaps outer all set $outer_gaps
+	$mod+Ctrl+z gaps inner all plus $inner_gaps,gaps outer all plus $outer_gaps
+	$mod+Ctrl+x gaps inner all minus $inner_gaps,gaps outer all minus $outer_gaps
+
+	# Cycle between horizontal and vertical split layout
+	$mod+t split toggle
+	# $mod+s split vertical
+	# $mod+v split horizontal
+
+	# Cycle between stacking, tabbed, and last split layout
+	$mod+c layout toggle all
+
+	# Make the current focus fullscreen
+	F11 fullscreen
+
+	# Move the currently focused window to the scratchpad
+	$mod+Shift+minus move scratchpad
+	# Show the next scratchpad window or hide the focused scratchpad window.
+	# If there are multiple scratchpad windows, cycles through them.
+	$mod+minus scratchpad show
+}
+# }}}
+
+# WORKSPACES {{{
+# Workspaces:
+
+# Note: We can use names, with set $ws1 Name
+bindsym {
+	# Switch to workspace
+	$mod+1 workspace number 1
+	$mod+2 workspace number 2
+	$mod+3 workspace number 3
+	$mod+4 workspace number 4
+	$mod+5 workspace number 5
+	$mod+6 workspace number 6
+	$mod+7 workspace number 7
+	$mod+8 workspace number 8
+	$mod+9 workspace number 9
+
+	# Move focused container to workspace
+	$mod+Shift+1 move container to workspace number 1
+	$mod+Shift+2 move container to workspace number 2
+	$mod+Shift+3 move container to workspace number 3
+	$mod+Shift+4 move container to workspace number 4
+	$mod+Shift+5 move container to workspace number 5
+	$mod+Shift+6 move container to workspace number 6
+	$mod+Shift+7 move container to workspace number 7
+	$mod+Shift+8 move container to workspace number 8
+	$mod+Shift+9 move container to workspace number 9
+
+	# Prior = PageUp, Next = PageDown
+	# GNOME-like workspace movements
+	$mod+Prior exec sway-workspace prev
+	$mod+Next exec sway-workspace next
+	$mod+Shift+Prior exec sway-workspace prev move
+	$mod+Shift+Next exec sway-workspace next move
+}
+
+# }}}
+
+# MODES {{{
+# External display management
+set $display ""
+# set $display "[m]onitor [l]aptop [b]oth"
+mode $display {
+	bindsym m output $monitor enable, output $laptop disable, mode "default"
+	bindsym l output $monitor disable, output $laptop enable, mode "default"
+	bindsym b output $monitor enable, output $laptop enable, mode "default"
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+Shift+d mode $display
+
+# set $logout "[l]ock [e]xit [s]hutdown [r]eboot"
+set $logout ""
+mode $logout {
+	bindsym l exec swaylock, mode "default"
+	bindsym e exec swaymsg exit, mode "default"
+	bindsym r exec systemctl reboot, mode "default"
+	bindsym s exec systemctl poweroff, mode "default"
+	# bindsym S exec systemctl suspend mode "default"
+	# bindsym h exec systemctl hibernate, mode "default"
+
+	# return to default mode
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+Shift+x mode $logout
+
+# }}}
+
+# Start Services
+exec {
+	# Fixes long load time of GTK+ apps
+	systemctl --user import-environment
+	### Idle configuration
+	# Lock screen after 300 seconds of inactivity, then turn off
+	# displays after another 30 seconds, and turn screens back on when
+	# resumed. It will also lock your screen before your computer goes to sleep.
+	swayidle -w \
+		timeout 300 'swaylock' \
+		timeout 330 'swaymsg "output * dpms off"' \
+		timeout 30 'if pgrep swaylock; then swaymsg "output * dpms off"; fi' \
+		resume 'swaymsg "output * dpms on"' \
+		before-sleep 'swaylock'
+	autotiling-rs
+	udiskie
+	mopidy
+	# needed for barify
+	mako
+}
+
+# When reloading sway while using clamshell mode, the displays may reset (i.e. both displays will be enabled). To stop this:
+exec_always "grep -q open /proc/acpi/button/lid/LID/state && swaymsg output $laptop enable || swaymsg output $laptop disable"
+
+include $HOME/.config/sway/config.d/*

@@ -1,0 +1,63 @@
+{
+  "function": {
+    "prefix": "fun",
+    "body": [
+      "function! $1() abort",
+      "\t$0",
+      "endfunction"
+    ]
+  },
+  "if": {
+    "prefix": "if",
+    "body": [
+      "if $0",
+      "endif"
+    ]
+  },
+  "elseif": {
+    "prefix": "elif",
+    "body": [
+      "if $0",
+      "elseif $0",
+      "endif"
+    ]
+  },
+  "for": {
+    "prefix": "for",
+    "body": [
+      "for $0",
+      "endfor"
+    ]
+  },
+  "augroup": {
+    "prefix": "aug",
+    "body": [
+      "augroup ${1:group name}",
+      "\tautocmd!",
+      "\tautocmd ${0:${TM_SELECTED_TEXT:event pattern command}}",
+      "augroup END"
+    ]
+  },
+  "fold": {
+    "prefix": [
+      "fold"
+    ],
+    "body": [
+      "\" ${1: Fold title} {{{",
+      "\t${0:${TM_SELECTED_TEXT}}",
+      "\" }}}"
+    ]
+  },
+  "header": {
+    "prefix": "header",
+    "body": [
+      "\"=================================================",
+      "\" File: ${TM_FILENAME}",
+      "\" Maintainer: ourigen <https://github.com/ourigen>",
+      "\" Description: $1",
+      "\" Created: ${CURRENT_DAY_NAME_SHORT} ${CURRENT_DATE} ${CURRENT_MONTH_NAME} ${CURRENT_YEAR}",
+      "\" License: GNU General Public License",
+      "\"================================================="
+    ]
+  }
+}

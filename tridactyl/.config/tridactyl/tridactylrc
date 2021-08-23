@@ -1,0 +1,14 @@
+# colourscheme tokyonight-center
+colourscheme tokyonight
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind n findnext 1
+bind N findnext -1
+bind ,<Space> nohlsearch
+
+unbind --mode=normal <C-f>
+unbind --mode=normal <C-b>
+
+set smoothscroll true
+# set allowautofocus false # prevents auto insert mode but misbehaves
+set newtab about:blank

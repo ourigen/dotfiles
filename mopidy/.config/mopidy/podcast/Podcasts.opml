@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no' ?>
+<opml version="2.0">
+  <head>
+    <title>AntennaPod Subscriptions</title>
+    <dateCreated>25 Jul 21 10:03:22 -0500</dateCreated>
+  </head>
+  <body>
+    <!-- <outline text="Checking In with Susan David" title="Checking In with Susan David" type="rss" xmlUrl="http://feeds.feedburner.com/TED_SusanDavid" htmlUrl="http://www.ted.com/podcasts" /> -->
+    <outline text="How to Be a Better Human" title="How to Be a Better Human" type="rss" xmlUrl="https://feeds.feedburner.com/HowToBeABetterHuman" htmlUrl="https://beta.prx.org/series/39477" />
+    <outline text="Not Overthinking" title="Not Overthinking" type="rss" xmlUrl="https://rss.art19.com/not-overthinking" htmlUrl="https://art19.com/shows/not-overthinking" />
+    <outline text="The Ground Up Show" title="The Ground Up Show" type="rss" xmlUrl="https://mattdavella.libsyn.com/rss" htmlUrl="http://groundupshow.com" />
+    <outline text="The Inforium" title="The Inforium" type="rss" xmlUrl="https://rss.art19.com/the-inforium" htmlUrl="https://art19.com/shows/the-inforium" />
+    <!-- <outline text="The Productivity Show: Time Management | GTD | Smart Personal Development | Business | Mac" title="The Productivity Show: Time Management | GTD | Smart Personal Development | Business | Mac" type="rss" xmlUrl="https://www.asianefficiency.com/podcasts/feed/" htmlUrl="https://www.asianefficiency.com/podcasts/" /> -->
+    <outline text="The TED Interview" title="The TED Interview" type="rss" xmlUrl="https://feeds.feedburner.com/TedInterview" htmlUrl="https://www.ted.com/podcasts/ted-interview" />
+    <outline text="WorkLife with Adam Grant" title="WorkLife with Adam Grant" type="rss" xmlUrl="https://feeds.feedburner.com/WorklifeWithAdamGrant" htmlUrl="https://www.ted.com/podcasts/worklife" />
+  </body>
+</opml>

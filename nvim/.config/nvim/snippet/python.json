@@ -1,0 +1,94 @@
+{
+  "shebang": {
+    "prefix": [
+      "env"
+    ],
+    "body": [
+      "#!/usr/bin/env python"
+    ]
+  },
+  "main": {
+    "prefix": [
+      "main"
+    ],
+    "body": [
+      "if __name__ == \"__main__\":",
+      "\t$1"
+    ]
+  },
+  "for": {
+    "prefix": [
+      "for"
+    ],
+    "body": [
+      "for ${1:target} in ${2:expression_list}:",
+      "\t${3:${TM_SELECTED_TEXT}}"
+    ]
+  },
+  "while": {
+    "prefix": [
+      "while"
+    ],
+    "body": [
+      "while ${1:True}:",
+      "\t${2:${TM_SELECTED_TEXT}}"
+    ]
+  },
+  "if": {
+    "prefix": [
+      "if"
+    ],
+    "body": [
+      "if ${1:True}:",
+      "\t${2:pass}",
+      "else:",
+      "\t${3:pass}"
+    ]
+  },
+  "elif": {
+    "prefix": [
+      "elif"
+    ],
+    "body": [
+      "if ${1:True}:",
+      "\t${2:pass}",
+      "elif ${3:True}",
+      "\t${4:pass}",
+      "else:",
+      "\t${5:pass}"
+    ]
+  },
+  "try/except": {
+    "prefix": "try",
+    "body": [
+      "try:",
+      "\t${1:${TM_SELECTED_TEXT}}",
+      "except ${2:IOError}:",
+      "\t${3:pass}"
+    ]
+  },
+  "with": {
+    "prefix": "with",
+    "body": [
+      "with ${1:expression} as ${2:target}:",
+      "\t${0:${TM_SELECTED_TEXT}}"
+    ]
+  },
+  "class": {
+    "prefix": [
+      "class"
+    ],
+    "body": [
+      "class ${1:MyClass}:",
+      "    def __init__(self${2:, arg}):",
+      "        $0"
+    ]
+  },
+  "def": {
+    "prefix": "def",
+    "body": [
+      "def ${1:funcname}(${2:parameter}):",
+      "\t${0:pass}"
+    ]
+  }
+}

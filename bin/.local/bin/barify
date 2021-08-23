@@ -1,0 +1,192 @@
+#!/bin/bash
+
+# Author: Patrick Wicki <patrick.wicki96 at gmail dot com>
+
+# This is a script to adjust volume and brightness levels and show an indicator
+# using either dunst (Xorg/Wayland) or mako (Wayland)
+# The primary purpose is to draw a bar as a visual indicator.
+# An alternative on wayland would be to use wob (https://github.com/francma/wob)
+# but that doesn't support custom colors (yet), while dunst and mako can of
+# course be configured to fit any theme.
+
+# Requirements:
+#  Xorg: dunst & dunstify
+#  Wayland: notify-send and mako
+#  ttf-font-awesome for the icons
+#  pulseaudio (if you want support for others, feel free to contribute)
+
+usage="Usage: $(basename "$0") MODE ACTION
+Modify volume or brightness and indicate level as
+a bar via notifications (either dunst or mako).
+
+Example:
+   barify vol up
+
+Arguments:
+   MODE:
+      Volume:     volume|vol|v
+      Brightness: brightness|bright|b
+   ACTION:
+      Increase:   up|u|inc|i
+      Decrease:   down|dec|d
+      Mute:       mute|m"
+
+MODE=-1   # 1 = volume, 2 = brightness
+ACTION=-1 # 1 = inc, 2 = down, 3 = mute
+ICON=
+
+case $1 in
+	v*)
+		MODE=1
+		ICON=
+		case $2 in
+			up|u|inc|i)
+				ACTION=1
+				;;
+			down|dec|d)
+				ACTION=2
+				;;
+			mute|m)
+				ACTION=3
+				;;
+			*)
+				echo "$usage"
+				exit 1
+		esac
+		;;
+	b*)
+		MODE=2
+		ICON=
+		case $2 in
+			up|u|inc|i)
+				ACTION=1
+				;;
+			down|dec|d)
+				ACTION=2
+				;;
+			*)
+				echo "$usage"
+				exit 1
+		esac
+		;;
+	*)
+		echo "$usage"
+		exit 1
+esac
+
+# Lock to assert only a single instance is running.
+# brightnessctl for example can take quite a while to execute,
+# which can lead to the bar going back and forth if multiple instances
+# are running simultanously.
+LOCKFILE="/tmp/.`basename $0`.lock"
+TIMEOUT=0.1
+touch $LOCKFILE
+exec {FD}<>$LOCKFILE
+
+if ! flock -x -w $TIMEOUT $FD; then
+	echo "Failed to obtain a lock within $TIMEOUT seconds"
+	echo "Another instance of `basename $0` is probably running."
+	exit 1
+fi
+
+function get_volume {
+	# amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
+	pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]*%' | head -n 1
+}
+
+function is_mute {
+	# amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null
+	pactl get-sink-mute @DEFAULT_SINK@ | grep 'yes'
+}
+
+function get_brightness {
+	brightnessctl -m | cut -d ',' -f 4
+}
+
+# Function to repeat a character
+# arg $1: number of repetitions
+# arg $2: char to be printed
+function repChar {
+	for (( i = 0; i < $1; i++ )); do
+		printf "$2"
+	done
+}
+
+function send_notification {
+	# If mako is running we dismiss the previous notification and use
+	# notify-send, since mako will draw a progress bar by itself
+	if pgrep mako &>/dev/null ; then
+		# For now we dismiss the previous notification to
+		# "replace" the bar. This should be improve once
+		# functionality like the one proposed in
+		# https://github.com/emersion/mako/pull/270 is merged.
+		makoctl dismiss
+		if [ $MODE == 1 ] && is_mute ; then
+			notify-send " Muted" -h int:value:$1 -t 5000
+		else
+			notify-send "$ICON $1" -h int:value:$1 -t 5000
+		fi
+		return
+	fi
+
+	# On dunst, the bar is printed with a fixed width and a padding
+	# character ("░") so it can be used in a dynamically sized dunst frame
+	# and is therefore at least somewhat portable between hidpi and
+	# normal screens.
+	if pgrep dunst &>/dev/null ; then
+		if [ $MODE == 1 ] && is_mute ; then
+			dunstify -i NUL -r 2593 -u normal "  Muted"
+		else
+			length=25 # Number characters for the bar
+			div=$((100 / $length))
+			total=$((100 / $div))
+			left=$(($1 / $div))
+			right=$(($total - $left))
+			bar=$(repChar $left "█")$(repChar $right "░")
+
+			dunstify -i NUL -r 2593 -u normal "$ICON $bar"
+		fi
+		return
+	fi
+
+	echo 'Warning: Neither dunst nor mako was found to be running.' 1>&2
+}
+
+if [ $MODE -eq 1 ] # Volume
+then
+	case $ACTION in
+		1)
+			# Set the volume on (if it was muted)
+			# amixer -D pulse set Master on > /dev/null
+			# Up the volume (+ 5%)
+			# amixer -D pulse sset Master 4%+ > /dev/null
+			pactl set-sink-volume @DEFAULT_SINK@ +2%
+			send_notification `get_volume`
+			;;
+		2)
+			# amixer -D pulse set Master on > /dev/null
+			# amixer -D pulse sset Master 4%- > /dev/null
+			pactl set-sink-volume @DEFAULT_SINK@ -2%
+			send_notification `get_volume`
+			;;
+		3)
+			# Toggle mute
+			# amixer -D pulse set Master 1+ toggle > /dev/null
+			pactl set-sink-mute @DEFAULT_SINK@ toggle
+			send_notification `get_volume`
+			;;
+	esac
+elif [ $MODE -eq 2 ] # Brightness
+then
+	case $ACTION in
+		1)
+			brightnessctl -q set 2%+
+			send_notification `get_brightness`
+			;;
+		2)
+			brightnessctl -q set 2%-
+			send_notification `get_brightness`
+			;;
+	esac
+fi
+

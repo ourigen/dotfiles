@@ -1,0 +1,55 @@
+# vim: ft=conf
+ignore-empty-password
+daemonize
+
+color=24283b
+# text-color=c0caf5
+
+# swaylock-effects
+# clock
+# timestr=%I:%M %p 
+# datestr=%d %B %Y
+
+font=Iosevka Nerd Font Mono
+font-size=50
+
+indicator-idle-visible
+# indicator-caps-lock
+# indicator-radius=150
+indicator-thickness=3
+
+# normal swaylock
+indicator-radius=50
+indicator-y-position=950
+text-color=00000000
+
+key-hl-color=7aa2f7
+bs-hl-color=e0af68
+caps-lock-key-hl-color=f7768e
+caps-lock-bs-hl-color=e0af68
+
+inside-color=00000000
+inside-caps-lock-color=00000000
+inside-clear-color=00000000
+inside-ver-color=00000000
+inside-wrong-color=00000000
+
+separator-color=24283b
+
+ring-color=00000000
+ring-clear-color=e0af68
+ring-caps-lock-color=00000000
+ring-ver-color=00000000
+ring-wrong-color=f7768e
+
+line-color=00000000
+line-clear-color=00000000
+line-caps-lock-color=00000000
+line-ver-color=00000000
+line-wrong-color=f7768e
+
+# transparent text
+text-clear-color=00000000
+text-caps-lock-color=00000000
+text-ver-color=00000000
+text-wrong-color=00000000

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# "Check yourself before you rec yourself"
+# Check if an instance of wf-recorder is already running
+# If it is, kill the instance. Otherwise, start recording
+
+REC_FILE="record-$(date +%Y-%m-%d_%H%M%S).mp4"
+NOTIF_DUR=3000
+
+if [ "$(pgrep wf-recorder)" ]; then
+	pkill --signal SIGINT wf-recorder &&
+		notify-send -t $NOTIF_DUR "Recording saved" "$REC_FILE"
+else
+	notify-send -t $NOTIF_DUR "Recording starting..." "Select screen to share" &&
+		wf-recorder -g "$(slurp)" -c libx264rgb --audio --file="$HOME/videos/recordings/$REC_FILE" 
+fi

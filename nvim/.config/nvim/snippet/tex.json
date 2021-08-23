@@ -1,0 +1,266 @@
+{
+  "header": {
+    "prefix": [
+      "doc"
+    ],
+    "body": [
+      "\\documentclass[${1:letterpaper}]{${2:article}}",
+      "\\usepackage[english]{babel}",
+      "\\usepackage[utf8]{inputenc}",
+      "\\usepackage[margin=1in]{geometry}",
+      "\\usepackage[colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}",
+      "",
+      "\\title{${3:Title}}",
+      "\\author{${4:Author}}",
+      "\\date{${5:${CURRENT_DATE} ${CURRENT_MONTH_NAME} ${CURRENT_YEAR}}}",
+      "",
+      "\\begin{document}",
+      "\\maketitle",
+      "   $0",
+      "\\end{document}"
+    ]
+  },
+  "bibliography": {
+    "prefix": [
+      "bib"
+    ],
+    "body": [
+      "\\usepackage[backend=biber]{biblatex}",
+      "\\addbibresource{${1:${TM_FILENAME_BASE}.bib}}"
+    ]
+  },
+  "usepackage": {
+    "prefix": [
+      "pac"
+    ],
+    "body": [
+      "\\usepackage${1:[options]}{$2}"
+    ]
+  },
+  "href": {
+    "prefix": [
+      "href"
+    ],
+    "body": [
+      "\\href{https://${1:www.url.com}}{${2:${TM_SELECTED_TEXT}}}$0"
+    ]
+  },
+  "mailto": {
+    "prefix": [
+      "email"
+    ],
+    "body": [
+      "\\href{mailto:${1:${TM_SELECTED_TEXT}}}{$1}"
+    ]
+  },
+  "textbf": {
+    "prefix": [
+      "bf"
+    ],
+    "body": [
+      "\\textbf{${1:${TM_SELECTED_TEXT}}}$0"
+    ]
+  },
+  "textit": {
+    "prefix": [
+      "it"
+    ],
+    "body": [
+      "\\textit{${1:${TM_SELECTED_TEXT}}}$0"
+    ]
+  },
+  "underline": {
+    "prefix": [
+      "un"
+    ],
+    "body": [
+      "\\underline{${1:${TM_SELECTED_TEXT}}}$0"
+    ]
+  },
+  "pgfplot": {
+    "prefix": [
+      "pgf"
+    ],
+    "body": [
+      "\\begin{figure}[h]",
+      "\t\\centering",
+      "\t\\begin{tikzpicture}",
+      "\t\t\\begin{axis}[",
+      "\t\t\txlabel=labelx,",
+      "\t\t\tylabel=labely,",
+      "\t\t\t]",
+      "\t\t\t\\addplot[color=red,mark=x] $0;",
+      "\t\t\\end{axis}",
+      "\t\\end{tikzpicture}",
+      "\t\\caption{$2}",
+      "\t\\label{fig:$1}",
+      "\\end{figure}"
+    ]
+  },
+  "tikz": {
+    "prefix": [
+      "tikz"
+    ],
+    "body": [
+      "\\begin{figure}[h]",
+      "\t\\centering",
+      "\t\\begin{tikzpicture}",
+      "\t\t\\draw (${3:0,0}) -- (${4:0,0}) ;",
+      "\t\t\\end{axis}",
+      "\t\\end{tikzpicture}",
+      "\t\\caption{$2}",
+      "\t\\label{fig:$1}",
+      "\\end{figure}"
+    ]
+  },
+  "figure": {
+    "prefix": [
+      "fig"
+    ],
+    "body": [
+      "\\begin{figure}[h]",
+      "\t\\centering",
+      "\t\\includegraphics[width=${3:0.5}\\linewidth]{${TM_DIRECTORY}/img/${4:name}.jpg}",
+      "\t\\caption{$2}",
+      "\t\\label{fig:$1}",
+      "\\end{figure}"
+    ]
+  },
+  "enumerate": {
+    "prefix": [
+      "enum"
+    ],
+    "body": [
+      "\\begin{enumerate}[label=${1:\\alph*}]",
+      "\t\\item ${0:${TM_SELECTED_TEXT}",
+      "\\end{enumerate}"
+    ]
+  },
+  "itemize": {
+    "prefix": [
+      "item"
+    ],
+    "body": [
+      "\\begin{itemize}",
+      "\t\\item ${0:${TM_SELECTED_TEXT}}",
+      "\\end{itemize}"
+    ]
+  },
+  "section": {
+    "prefix": [
+      "sec"
+    ],
+    "body": [
+      "\\section{$1}",
+      "",
+      "${0:${TM_SELECTED_TEXT}}"
+    ]
+  },
+  "subsection": {
+    "prefix": [
+      "ssec"
+    ],
+    "body": [
+      "\\subsection{$1}",
+      "",
+      "${0:${TM_SELECTED_TEXT}}"
+    ]
+  },
+  "subsubsection": {
+    "prefix": [
+      "sssec"
+    ],
+    "body": [
+      "\\subsubsection{$1}",
+      "",
+      "${0:${TM_SELECTED_TEXT}}"
+    ]
+  },
+  "()": {
+    "prefix": [
+      "l("
+    ],
+    "body": [
+      "\\left(${1:${TM_SELECTED_TEXT}}\\right) $0"
+    ]
+  },
+  "[]": {
+    "prefix": [
+      "l["
+    ],
+    "body": [
+      "\\left[${1:${TM_SELECTED_TEXT}}\\right] $0"
+    ]
+  },
+  "{}": {
+    "prefix": [
+      "l{"
+    ],
+    "body": [
+      "\\left\\{${1:${TM_SELECTED_TEXT}}\\right\\} $0"
+    ]
+  },
+  "fraction": {
+    "prefix": [
+      "frac"
+    ],
+    "body": [
+      "\\frac{$1}{$2} $0"
+    ]
+  },
+  "display math": {
+    "prefix": [
+      "dm"
+    ],
+    "body": [
+      "\\[",
+      "${0:${TM_SELECTED_TEXT}}",
+      "\\]"
+    ]
+  },
+  "environment": {
+    "prefix": [
+      "beg"
+    ],
+    "body": [
+      "\\begin{$1}",
+      "${0:${TM_SELECTED_TEXT}}",
+      "\\end{$1}"
+    ]
+  },
+  "lecture header": {
+    "prefix": [
+      "lec"
+    ],
+    "body": [
+      "\\documentclass[letterpaper]{article}",
+      "\\usepackage[english]{babel}",
+      "\\usepackage[utf8]{inputenc}",
+      "\\usepackage[margin=1in]{geometry}",
+      "\\usepackage[colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}",
+      "\\usepackage{enumitem}",
+      "\\usepackage{amsmath, amsthm,amssymb,physics}",
+      "\\usepackage{fancyhdr}",
+      "\\usepackage{microtype}",
+      "\\usepackage{parskip}",
+      "\\usepackage{tikz}",
+      "\\usepackage{graphicx}",
+      "",
+      "\\newcommand\\N{\\ensuremath{\\mathbb{N}}}",
+      "\\newcommand\\R{\\ensuremath{\\mathbb{R}}}",
+      "\\newcommand\\Z{\\ensuremath{\\mathbb{Z}}}",
+      "\\newcommand\\Q{\\ensuremath{\\mathbb{Q}}}",
+      "\\newcommand\\C{\\ensuremath{\\mathbb{C}}}",
+      "",
+      "\\pagestyle{fancy}",
+      "\\fancyhf{}",
+      "\\lhead{$1}",
+      "\\cfoot{Page \\thepage}",
+      "\\rhead{$2}",
+      "",
+      "\\begin{document}",
+      "   $0",
+      "\\end{document}"
+    ]
+  }
+}

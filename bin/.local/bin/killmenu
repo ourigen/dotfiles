@@ -1,0 +1,8 @@
+#!/bin/sh
+# Kills a process currently running
+
+if type wofi > /dev/null; then
+	ps -u "$USER" -o pid,comm | sed -n '1!p' | sed -e 's/^[[:space:]]*//' | wofi --dmenu | awk '{print $1}' | xargs -r kill
+elif type bemenu > /dev/null; then
+	ps -u "$USER" -o pid,comm,%mem,%cpu | sed -n '1!p' | bemenu -i -l 10 -p "Kill" | awk '{print $1}' | xargs -r kill
+fi

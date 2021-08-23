@@ -1,0 +1,5 @@
+# R_HOME_USER = ${HOME}
+R_PROFILE_USER = ${HOME}/.config/R/.Rprofile
+R_LIBS_USER = ${HOME}/.local/share/R/library
+R_HISTFILE = ${HOME}/.local/share/R/.Rhistory
+# to check, use Sys.getenv("Key")

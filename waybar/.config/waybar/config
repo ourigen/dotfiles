@@ -1,0 +1,130 @@
+// vim: ft=json cms=//\ %s
+{
+	"layer": "bottom",  // changing to "top" affects bemenu display
+	"position": "top",
+	// "exclusive": false,
+	"height": 20,
+	// "width": 1280, // Leave blank for dynamic
+
+	"modules-left": [
+		"sway/workspaces",
+		"custom/separator",
+		"sway/window"
+	],
+
+	"modules-center": [
+		"clock"
+	],
+
+	"modules-right": [
+		"mpd",
+		"custom/separator",
+		"disk",
+		"custom/separator",
+		"cpu",
+		"custom/separator",
+		"memory",
+		"custom/separator",
+		"battery",
+		"sway/mode",
+		"tray"
+	],
+
+	"custom/separator": {
+		"format": "|",
+		"interval": "once",
+		"tooltip": false
+	},
+
+	"sway/workspaces": {
+		"persistent_workspaces": {
+			"1": [],
+			"2": [],
+			"3": [],
+			"4": [],
+			"5": [],
+			"6": [],
+			"7": [],
+			"8": [],
+			"9": []
+		}
+	},
+
+	"sway/window": {
+		"format": " {}",
+		"max-length": 80
+	},
+
+	// "idle_inhibitor": {
+	// 	"format": "{icon}",
+	// 	"format-icons": {
+	// 		"activated": "",
+	// 		"deactivated": ""
+	// 	}
+	// },
+
+	"clock": {
+		"format": "<span foreground='#7dcfff'></span> {:%d %B %Y - %I:%M %p}",
+		"interval": 60,
+		"tooltip-format": "{:%A, %d %B %Y}\n<tt>{calendar}</tt>"
+	},
+
+	"mpd": {
+		"interval": 60,
+		"max-length": 50,
+		"format": "<span foreground='#bb9af7'></span> {title} - {artist}",
+		"format-paused": "<span style='italic'>{title} - {artist}</span>",
+		"format-stopped": "",
+		"format-disconnected": "",
+		"on-click": "mpc --quiet toggle",
+		"on-click-right": "setsid alacritty -e ncmpcpp",
+		// "on-click-right": "cantata",
+		"on-click-middle": "mpc --quiet stop",
+		"on-scroll-up": "mpc --quiet prev",
+		"on-scroll-down": "mpc --quiet next",
+		"tooltip-format": "{title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%H:%M:%S})"
+	},
+
+	"disk": {
+		"interval": 18000,
+		"format": "<span foreground='#9ece6a'>﫭</span> {percentage_used}%",
+		"tooltip-format": "{used} used out of {total} on {path}"
+	},
+
+	"cpu": {
+		"interval": 300,
+		"format": "<span foreground='#e0af68'>﬙</span> {usage}%"
+	},
+
+	"memory": {
+		"interval": 300,
+		"format": "<span foreground='#7aa2f7'></span> {percentage}%",
+		"tooltip-format": "{used:0.2f}GiB used out of {total:0.2f}GiB"
+	},
+
+	"battery": {
+		"interval": 600,
+		"design-capacity": false,
+		"states": {
+			"warning": 15,
+			"critical":10 
+		},
+		"format": "<span foreground='#f7768e'>{icon}</span> {capacity}%",
+		"format-charging": "<span foreground='#f7768e'>{icon}</span> {capacity}%",
+		"format-time": "{H}h {M}m",
+		"format-icons": ["", "", "", "", "", ""]
+		// "format-icons": ["     ", "     ", "     ", "     ", "     ", "      "]
+	},
+
+	"tray": {
+		"icon-size": 15,
+		"spacing": 5
+	}
+
+	// "wlr/taskbar": {
+	// 	"format": "{title}",
+	// 	"tooltip-format": "{title}",
+	// 	"on-click": "minimize-raise",
+	// 	"on-click-middle": "close"
+	// }
+}

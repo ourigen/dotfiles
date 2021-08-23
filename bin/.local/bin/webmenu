@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+# Description: Search various search engines (inspired by surfraw).
+# Dependencies: bemenu and a web browser
+
+# An array of search engines.  You can edit this list to add/remove
+# search engines. The format must be: "engine_name]="url".
+# The url format must allow for the search keywords at the end of the url.
+# For example: https://www.amazon.com/s?k=XXXX searches Amazon for 'XXXX'.
+
+# Source: https://gitlab.com/dwt1/dmscripts/-/blob/master/dmsearch
+declare -A options
+options[archwiki]="https://wiki.archlinux.org/index.php?search="
+options[duckduckgo]="https://duckduckgo.com/?q="
+options[ebay]="https://www.ebay.com/sch/i.html?&_nkw="
+options[github]="https://github.com/search?q="
+options[reddit]="https://www.reddit.com/search/?q="
+options[stackexchange]="https://unix.stackexchange.com/search?q="
+options[thesaurus]="https://www.thesaurus.com/misspelling?term="
+options[merriamwebster]="https://www.merriam-webster.com/dictionary/"
+options[wikipedia]="https://en.wikipedia.org/wiki/"
+options[wolframalpha]="https://www.wolframalpha.com/input/?i="
+options[youtube]="https://www.youtube.com/results?search_query="
+
+# Picking a search engine.
+while [ -z "$engine" ]; do
+	if type wofi > /dev/null; then
+		engine=$(printf '%s\n' "${!options[@]}" | sort | wofi --dmenu) || exit
+	elif type bemenu > /dev/null; then
+		engine=$(printf '%s\n' "${!options[@]}" | sort | bemenu -i -p 'Engine') || exit
+	fi
+    url="${options["${engine}"]}" || exit
+done
+
+# Searching the chosen engine.
+while [ -z "$query" ]; do
+
+	if type wofi > /dev/null; then
+		if [ "$engine" = "youtube" ]; then
+			query=$(echo "$engine" | wofi --dmenu | tr ' ' '+') || exit
+		else
+			query=$(echo "$engine" | wofi --dmenu) || exit
+		fi
+	elif type bemenu > /dev/null; then
+		if [ "$engine" = "youtube" ]; then
+			query=$(echo "$engine" | bemenu -p "$engine" | tr ' ' '+') || exit
+		else
+			query=$(echo "$engine" | bemenu -p "$engine") || exit
+		fi
+	fi
+
+done
+
+if [ "$engine" = "youtube" ]; then
+	query=$(curl -s "https://www.youtube.com/results?search_query=""$query""&sp=EgIQAQ%253D%253D")
+
+	if type wofi > /dev/null; then
+		vid=$( echo "$query" | grep -Po '(/watch\?v=.{11})|(?<=title":{"runs":\[{"text":").+?(?="}\])' | paste - - | wofi --dmenu | cut -f2 || notify-send "Something went wrong...")
+	elif type bemenu > /dev/null; then
+		vid=$( echo "$query" | grep -Po '(/watch\?v=.{11})|(?<=title":{"runs":\[{"text":").+?(?="}\])' | paste - - | bemenu -l 10 -p "Results" | cut -f2 || notify-send "Something went wrong...")
+	fi
+	[ "$vid" ] && mpv "https://youtube.com""$vid"
+else
+	# Display search results in web browser
+	$BROWSER "$url""$query"
+fi

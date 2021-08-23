@@ -1,0 +1,26 @@
+# stylesheet=style.css
+term=alacritty
+# matching=fuzzy
+insensitive=true
+layer=overlay
+prompt=
+# show=run,drun # combi mode
+show=run
+allow-images=false
+
+# key_up=Control_L-p
+# key_down=Control_L-n
+key_left=Control_L-p
+key_right=Control_L-n
+
+# DMENU THEME
+orientation=horizontal
+width=100%
+height=22
+layer=overlay
+halign=start
+content_halign=start
+hide_scroll=true 
+# location=top
+global_coords=true
+yoffset=-23

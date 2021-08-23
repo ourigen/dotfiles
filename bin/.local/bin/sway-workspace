@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Switches or move window to the next workspace.
+# If the workspace does not exist, create a new workspace.
+#
+# Usage: sway-workspace next|prev [move]
+
+if [ "$1" = "next" ]; then
+	WORKSPACE="$(swaymsg -t get_workspaces | jq '.[] | select(.focused).num + 1')"
+elif [ "$1" = "prev" ]; then
+	WORKSPACE="$(swaymsg -t get_workspaces | jq '.[] | select(.focused).num - 1')"
+fi
+if [ "$2" = "move" ]; then
+	swaymsg move container to workspace "$WORKSPACE"
+else
+	swaymsg workspace "$WORKSPACE"
+fi

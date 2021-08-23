@@ -1,0 +1,87 @@
+/* Any  GTK  widget can be selected by using the name of its CSS node, these however might change with updates and are not */
+/* guaranteed to stay constant. Wofi also provides certain widgets with names and classes which can be referenced from CSS */
+/* to  give access to the most important widgets easily. wofi(7) contains the current widget layout used by wofi so if you */
+/* want to get into CSS directly using GTK widget names look there for info. */
+
+* {
+	min-height: 0;
+	font-family: "Iosevka Nerd Font Mono";
+	font-size: 10pt;
+	color: #c0caf5;
+	border: none;
+	border-radius: 0;
+	margin: 0;
+	padding: 0;
+}
+
+@keyframes fadeIn {
+	from {opacity: 0;}
+	to {opacity: 1;}
+}
+
+/* The name of the window itself. */
+#window {
+	background-color: #24283b;
+	/* animation-name: fadeIn;
+	animation-duration: 0.2s; */
+}
+
+/* The name of the box that contains everything. */
+#outer-box {
+	/* border: 1px solid #414868; */
+	/* padding: 10px; */
+	background-color: #24283b;
+	border-bottom: 1px solid #414868;
+}
+
+/* The name of the search bar. */
+#input {
+	/* padding: 0 5px 0 0; */
+	background-color: #24283b;
+	min-width: 200px;
+	border: none;
+}
+
+/* Removing magnifying glass and back arrow inside input box */
+#input image { 
+	color: rgba(0,0,0,0); 
+}
+
+/* The name of the box containing all of the entries. */
+#inner-box {
+	background-color: #24283b;
+}
+
+/* The name of all the text in entries. */
+#text {
+	margin: 0px 2px;
+	padding: 1px 4px;
+	border: none;
+} 
+
+/* The name of all entries. */
+#entry {
+	border-radius: 0px;
+}
+
+#text:selected {
+	font-weight: normal;
+	border-radius: 0;
+	color: #24283b;
+}
+
+/* The name of all entries currently selected. */
+#entry:selected {
+	background-color: #7aa2f7;
+	border-radius: 0;
+	padding: 0;
+	margin: 0;
+}
+
+/* #entry:nth-child(even){
+    background-color: #292e42;
+}
+
+#entry:nth-child(even):selected{
+	background-color: #7aa2f7;
+} */
