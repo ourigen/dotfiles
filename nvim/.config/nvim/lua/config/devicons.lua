@@ -10,12 +10,12 @@ require'nvim-web-devicons'.setup {
 		zsh = {
 			icon = "",
 			color = "#428850",
-			name = "Zsh"
+			name = "zsh"
 		},
 		sh = {
 			icon = "",
 			color = "#428850",
-			name = "Zsh"
+			name = "sh"
 		},
 		html = {
 			icon = "",
@@ -55,7 +55,7 @@ require'nvim-web-devicons'.setup {
 		org = {
 			icon = "ﴬ",
 			color = "#9d7cd8",
-			name = "org-mode"
+			name = "org"
 		},
 	};
 }

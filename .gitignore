@@ -18,3 +18,5 @@ vim/
 bin/.local/bin/homebrew/
 nvim/.config/nvim/plugin/packer_compiled.lua
 zsh/.config/zsh/.zcompdump*
+*.log
+mopidy/.config/mopidy/podcast/

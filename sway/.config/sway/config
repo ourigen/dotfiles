@@ -200,7 +200,7 @@ bindsym {
 	# Alt-tab to switch window focus
 	# Mod1+Tab exec bemenu-window_select
 
-	Print exec "grimshot --notify save screen $HOME/pictures/screenshots/screen-$(date +'%Y-%m-%d_%H%M%S').png"
+	Print exec "grimshot --notify save area $HOME/pictures/screenshots/screen-$(date +'%Y-%m-%d_%H%M%S').png"
 	Shift+Print exec sway-recorder
 
 	# use --locked so the keys can be accessed while sway is locked

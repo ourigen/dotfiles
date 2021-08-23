@@ -1,6 +1,5 @@
 # vim: ft=conf
 
-# NOTE: changed 282c34 -> 24283b & abb2bf -> c0caf5
 set default-bg "#24283b"
 set default-fg "#c0caf5"
 
