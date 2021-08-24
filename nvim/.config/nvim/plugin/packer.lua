@@ -3,8 +3,8 @@ return require('packer').startup({function()
 
 	use { 
 		'nvim-treesitter/nvim-treesitter',
-		branch = '0.5-compat',
 		run = ':TSUpdate',
+		-- event = "BufRead",
 		config = function()
 			require('config.treesitter')
 		end
@@ -12,8 +12,6 @@ return require('packer').startup({function()
 
 	use {
 		'hoob3rt/lualine.nvim',
-		requires = { 'kyazdani42/nvim-web-devicons' },
-		-- requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 		config = function()
 			require('config.lualine')
 		end
@@ -21,8 +19,6 @@ return require('packer').startup({function()
 
 	use {
 		'akinsho/bufferline.nvim',
-		requires = { 'kyazdani42/nvim-web-devicons' },
-		-- requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 		config = function()
 			require('config.bufferline')
 		end
@@ -30,7 +26,9 @@ return require('packer').startup({function()
 
 	-- use {
 	-- 	'kdheepak/tabline.nvim',
-	-- 	requires = { {'hoob3rt/lualine.nvim'}, {'kyazdani42/nvim-web-devicons', opt = true}
+	-- 	requires = { 
+	-- 		{'hoob3rt/lualine.nvim'},
+	-- 		{'kyazdani42/nvim-web-devicons'}
 	-- 	},
 	-- 	config = function()
 	-- 		require('config.tabline')
@@ -41,9 +39,9 @@ return require('packer').startup({function()
 		'kyazdani42/nvim-tree.lua',
 		requires = { 'kyazdani42/nvim-web-devicons'
 		-- requires = { 'kyazdani42/nvim-web-devicons', opt = true,
-			-- config = function()
-			-- 	require('config.devicons')
-			-- end
+		-- 	config = function()
+		-- 		require('config.devicons')
+		-- 	end
 		},
 		cmd = {'NvimTreeToggle', 'NvimTreeOpen', 'NvimTreeFindFile'},
 		config = function()
@@ -53,7 +51,6 @@ return require('packer').startup({function()
 
 	use {
 		'kyazdani42/nvim-web-devicons',
-		-- 'kyazdani42/nvim-web-devicons', opt = true,
 		config = function()
 			require('config.devicons')
 		end
@@ -81,21 +78,17 @@ return require('packer').startup({function()
 	-- 	end
 	-- }
 
-	use {
-		"folke/zen-mode.nvim",
-		cmd = {'ZenMode'},
-		config = function()
-			require('config.zenmode')
-		end
-	}
-
-	use {
-		'lewis6991/gitsigns.nvim',
-		requires = { 'nvim-lua/plenary.nvim' },
-		config = function()
-			require('config.gitsigns')
-		end
-	}
+	-- use {
+	-- 	'lewis6991/gitsigns.nvim',
+	-- 	requires = { 'nvim-lua/plenary.nvim' },
+	-- 	-- load only on git directories
+	-- 	cond = function()
+	-- 		return vim.fn.isdirectory ".git" == 1
+	-- 	end,
+	-- 	config = function()
+	-- 		require('config.gitsigns')
+	-- 	end
+	-- }
 
 	use {
 		'neovim/nvim-lspconfig',
@@ -107,7 +100,7 @@ return require('packer').startup({function()
 
 	use {
 		'onsails/lspkind-nvim',
-		after = 'nvim-lspconfig',
+		-- after = 'nvim-lspconfig',
 		config = function()
 			require('config.lspkind')
 		end
@@ -129,12 +122,13 @@ return require('packer').startup({function()
 		'kristijanhusak/orgmode.nvim',
 		config = function()
 			require('config.orgmode')
-		end}
+		end
+	}
 
 	use {
 		'akinsho/org-bullets.nvim', 
 		ft = 'org',
-		after = 'orgmode.nvim',
+		requires = 'orgmode.nvim',
 		config = function()
 			require('config.orgbullets')
 		end
@@ -148,53 +142,74 @@ return require('packer').startup({function()
 		end
 	}
 
-	use {
-		'hrsh7th/nvim-compe',
-		event = "InsertEnter *",
-		config = function()
-			require('config.compe')
-		end
-	}
-
-	use {
-		'hrsh7th/vim-vsnip',
-		event = "InsertEnter *",
-		config = function()
-			require('config.vsnip')
-		end
-	}
-
 	-- use {
-	-- 	'L3MON4D3/LuaSnip',
+	-- 	'hrsh7th/nvim-compe',
 	-- 	event = "InsertEnter *",
 	-- 	config = function()
-	-- 		require('config.luasnip')
+	-- 		require('config.compe')
 	-- 	end
 	-- }
 
 	use {
-		'windwp/nvim-autopairs',
-		after = 'nvim-compe',
+		'hrsh7th/nvim-cmp',
+		requires = {
+			{'hrsh7th/cmp-buffer'},
+			{'hrsh7th/cmp-path'},
+			{'hrsh7th/cmp-nvim-lsp'},
+			-- {'hrsh7th/cmp-nvim-lua'},
+			-- {'hrsh7th/cmp-vsnip'},
+			{'saadparwaiz1/cmp_luasnip', requires = {'L3MON4D3/LuaSnip'}},
+			{'onsails/lspkind-nvim'}
+		},
+		-- event = "InsertEnter *",
 		config = function()
-			require('config.autopairs')
-		end}
-
-	use {
-		'b3nj5m1n/kommentary',
-		config = function()
-			require('config.kommentary')
+			require('config.cmp')
 		end
 	}
 
 	-- use {
-	-- 	'terrortylor/nvim-comment',
+	-- 	'hrsh7th/vim-vsnip',
+	-- 	event = "InsertEnter *",
 	-- 	config = function()
-	-- 		require('config.comment')
-	-- 	end,
+	-- 		require('config.vsnip')
+	-- 	end
 	-- }
 
 	use {
+		'L3MON4D3/LuaSnip',
+		requires = {'rafamadriz/friendly-snippets'},
+		config = function()
+			require('config.luasnip')
+		end
+	}
+
+	use {
+		'windwp/nvim-autopairs',
+		after = 'nvim-cmp',
+		config = function()
+			require('config.autopairs')
+		end
+	}
+
+	-- use {
+	-- 	'b3nj5m1n/kommentary',
+	-- 	event = 'BufRead',
+	-- 	config = function()
+	-- 		require('config.kommentary')
+	-- 	end
+	-- }
+
+	use {
+		'terrortylor/nvim-comment',
+		event = 'BufRead',
+		config = function()
+			require('config.comment')
+		end,
+	}
+
+	use {
 		"blackCauldron7/surround.nvim",
+		event = 'BufRead',
 		config = function()
 			require('config.surround') 
 		end
@@ -217,10 +232,11 @@ return require('packer').startup({function()
 
 	use 'romainl/vim-cool'
 	use 'wellle/targets.vim'
-	-- use 'tpope/vim-surround' 
-	use 'tpope/vim-eunuch' 
+	use {
+		'tpope/vim-eunuch',
+		cmd = {'Move', 'Rename', 'Delete', 'Chmod', 'SudoWrite'},
+	}
 	use 'tommcdo/vim-exchange'
-	-- use 'tpope/vim-commentary'
 	-- use 'tommcdo/vim-lion'
 
 end,

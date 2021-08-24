@@ -9,7 +9,7 @@ require('bufferline').setup {
 		max_name_length = 25,
 		tab_size = 30,
 		diagnostics = false,
-		separator_style = 'slant',
+		separator_style = 'thin',
 		offsets = {
 			{
 				filetype = "NvimTree",

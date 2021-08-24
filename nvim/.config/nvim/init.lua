@@ -12,7 +12,7 @@ vim.opt.number = true                           -- print line number in front of
 vim.opt.relativenumber = true                   -- show line number relative to cursor line in front of each line
 vim.opt.splitbelow = true                       -- :split will put new window below current
 vim.opt.splitright = true                       -- :vsplit will put new window right of current one
-vim.opt.textwidth=120                           -- maximum width of text that is being inserted
+-- vim.opt.textwidth=120                           -- maximum width of text that is being inserted
 vim.opt.synmaxcol=1000                          -- maximum column in which to search for syntax items
 vim.opt.linebreak = true                        -- wrap long lines at a character in 'breakat'
 vim.opt.breakindent = true                      -- every wrapped line will continue visually indented
@@ -130,16 +130,12 @@ end
 vim.g.mapleader = ' '   -- Set <leader> to <Space>
 vim.api.nvim_set_keymap('n', ']b', '<cmd>bnext<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '[b', '<cmd>bprev<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', ']t', '<cmd>tabn<CR>', {noremap = true}) -- can also use gt
+vim.api.nvim_set_keymap('n', '[t', '<cmd>tabp<CR>', {noremap = true}) -- can also use gT
 vim.api.nvim_set_keymap('n', ']l', '<cmd>lnext<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '[l', '<cmd>lprev<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', ']q', '<cmd>cnext<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '[q', '<cmd>cprev<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', ']Q', '<cmd>cnfile<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '[Q', '<cmd>cpfile<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', ']l', '<cmd>lnext<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '[l', '<cmd>lprev<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', ']L', '<cmd>lnfile<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '[L', '<cmd>lpfile<CR>', {noremap = true})
 
 vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>Telescope find_files hidden=true<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>Telescope git_files<CR>', {noremap = true})

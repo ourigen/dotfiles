@@ -11,7 +11,7 @@ require('lualine').setup{
 		lualine_b = {
 			{
 				'branch',
-				icon = '',
+				-- icon = '',
 			}
 		},
 		lualine_c = {

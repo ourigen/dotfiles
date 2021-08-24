@@ -20,22 +20,24 @@ for type, icon in pairs(signs) do
 end
 
 -- Borders
-local border = {
-	{"🭽", "FloatBorder"},
-	{"▔", "FloatBorder"},
-	{"🭾", "FloatBorder"},
-	{"▕", "FloatBorder"},
-	{"🭿", "FloatBorder"},
-	{"▁", "FloatBorder"},
-	{"🭼", "FloatBorder"},
-	{"▏", "FloatBorder"},
-}
+-- local border = {
+-- 	{"🭽", "FloatBorder"},
+-- 	{"▔", "FloatBorder"},
+-- 	{"🭾", "FloatBorder"},
+-- 	{"▕", "FloatBorder"},
+-- 	{"🭿", "FloatBorder"},
+-- 	{"▁", "FloatBorder"},
+-- 	{"🭼", "FloatBorder"},
+-- 	{"▏", "FloatBorder"},
+-- }
 
 -- Use an on_attach function to only map the following keys 
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	vim.lsp.handlers["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border})
-	vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+	-- vim.lsp.handlers["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+	-- vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+	vim.lsp.handlers["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = 'single'})
+	vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = 'single'})
 
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -66,10 +68,21 @@ local on_attach = function(client, bufnr)
 	-- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 end
 
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.preselectSupport = true
+capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
 capabilities.textDocument.completion.completionItem.resolveSupport = {
-	properties = {"documentation", "detail", "additionalTextEdits"}
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
 }
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -90,7 +103,7 @@ for _, lsp in ipairs(servers) do
 	}
 end
 
--- Go o defintion in a split window
+-- Go to defintion in a split window
 local function goto_definition(split_cmd)
 	local util = vim.lsp.util
 	local log = require("vim.lsp.log")
@@ -123,3 +136,4 @@ local function goto_definition(split_cmd)
 end
 
 vim.lsp.handlers["textDocument/definition"] = goto_definition('topleft 5 split')
+-----
