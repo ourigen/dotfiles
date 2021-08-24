@@ -9,13 +9,10 @@ typeset -U PATH path
 path=(
 	"$path[@]"
 	"$HOME/.local/bin"
-	# "$HOME/.local/bin/bemenu"
-	# "$HOME/.local/bin/sway"
 	"/var/lib/flatpak/exports/bin/"
 )
 export PATH
 
-# export TERMINAL="alacritty"
 # export TERM="xterm-256color"
 export VISUAL="nvim"
 export EDITOR="$VISUAL"
@@ -52,13 +49,10 @@ export NNN_PLUG='p:preview-tui;f:fzcd;a:autojump;b:bulknew;x:xdgdefault;m:mtpmou
 export NNN_FCOLORS='04030402070506080b090d01'
 export NNN_TRASH=1
 export NNN_FIFO='/tmp/nnn.fifo'
-export NNN_BMS="w:~/pictures/wallpapers;p:~/projects;d:~/downloads;s:/mnt/srvshare/;c:~/courses"
+export NNN_BMS="w:~/pictures/wallpapers;p:~/projects;d:~/downloads;s:/mnt/srvshare/;c:~/courses;u:/run/media/arch/"
 
-# export BEMENU_BACKEND="wayland"
-# export BEMENU_OPTS=' -l 10 -H 24 -i -w --fn "Iosevka Nerd Font Mono 10" --tb "#414868" --tf "#c0caf5" --fb "#24283b" --ff "#c0caf5" --nb "#24283b" --nf "#a9b1d6" --hb "#414868" --hf "#c0caf5" --sb "#24283b" --sf "#c0caf5" --scb "#24283b" --scf "#c0caf5"'
-
-# export MOZ_ENABLE_WAYLAND=1
-# export MOZ_DBUS_REMOTE=1
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_DBUS_REMOTE=1
 
 export BAT_THEME="base16"
 # export QT_PLUGIN_PATH=/usr/lib/qt/plugins

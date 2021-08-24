@@ -15,6 +15,7 @@ set {
 	$blue #7aa2f7
 	$magenta #bb9af7
 
+	# Mod4 = Super, Mod1 = Meta/Alt
 	$mod Mod4
 	$left h
 	$down j
@@ -335,20 +336,19 @@ bindsym {
 # MODES {{{
 # External display management
 set $display ""
-# set $display "[m]onitor [l]aptop [b]oth"
+# "[m]onitor [l]aptop [b]oth"
 mode $display {
 	bindsym m output $monitor enable, output $laptop disable, mode "default"
 	bindsym l output $monitor disable, output $laptop enable, mode "default"
 	bindsym b output $monitor enable, output $laptop enable, mode "default"
 
-	# back to normal: Enter or Escape
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
 bindsym $mod+Shift+d mode $display
 
-# set $logout "[l]ock [e]xit [s]hutdown [r]eboot"
 set $logout ""
+# "[l]ock [e]xit [s]hutdown [r]eboot"
 mode $logout {
 	bindsym l exec swaylock, mode "default"
 	bindsym e exec swaymsg exit, mode "default"
@@ -357,7 +357,6 @@ mode $logout {
 	# bindsym S exec systemctl suspend mode "default"
 	# bindsym h exec systemctl hibernate, mode "default"
 
-	# return to default mode
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
@@ -379,7 +378,7 @@ exec {
 		timeout 30 'if pgrep swaylock; then swaymsg "output * dpms off"; fi' \
 		resume 'swaymsg "output * dpms on"' \
 		before-sleep 'swaylock'
-	autotiling-rs
+	autotiling
 	udiskie
 	mopidy
 	# needed for barify

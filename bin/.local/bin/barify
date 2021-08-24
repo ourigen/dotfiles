@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Author: Patrick Wicki <patrick.wicki96 at gmail dot com>
-
 # This is a script to adjust volume and brightness levels and show an indicator
 # using either dunst (Xorg/Wayland) or mako (Wayland)
 # The primary purpose is to draw a bar as a visual indicator.
@@ -13,7 +11,6 @@
 #  Xorg: dunst & dunstify
 #  Wayland: notify-send and mako
 #  ttf-font-awesome for the icons
-#  pulseaudio (if you want support for others, feel free to contribute)
 
 usage="Usage: $(basename "$0") MODE ACTION
 Modify volume or brightness and indicate level as

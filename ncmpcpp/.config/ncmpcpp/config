@@ -223,7 +223,8 @@ message_delay_time = 3
 
 ## Note: colors can be nested.
 
-song_list_format = {{%t}{ - $3ﴁ$9 %a}}|{$8%f$9}$R{$6$9 %b $8 $9 }{$7%l$9}
+# song_list_format = {{%t}{ - $3ﴁ$9 %a}}|{$8%f$9}$R{$6$9 %b $8|$9 }{$7%l$9}
+song_list_format = {{%t}{ - $3ﴁ$9 %a}}|{$8%f$9}$R{$7%l$9}
 
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
 # song_status_format = {{%t} - {%a{ "%b"}}}|{%f}
