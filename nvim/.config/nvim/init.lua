@@ -61,6 +61,9 @@ vim.opt.lazyredraw = true                       -- don't redraw screen macros, r
 vim.opt.hidden = true                           -- buffer becomes hidden when it's abandoned
 vim.opt.clipboard = 'unnamedplus'               -- prepend clipboard register '+' for all yank, delete, change and put operations
 vim.opt.omnifunc = 'syntaxcomplete#Complete'    -- used for omni completion i_CTRL-X_CTRL-O
+vim.opt.dictionary:append {                     -- used for keyword completion i_CTRL-X_CTRL-K
+	'/usr/share/dict/words' 
+}
 vim.opt.virtualedit = 'block'                   -- cursor can be positioned where there's no actual character in Visual block mode
 vim.opt.wildignorecase = true                   -- case ignored when completing files/directories
 

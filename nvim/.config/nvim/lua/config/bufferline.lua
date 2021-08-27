@@ -6,6 +6,7 @@ require('bufferline').setup {
 		close_icon = '',
 		left_trunc_marker = '',
 		right_trunc_marker = '',
+		-- show_buffer_icons = false,
 		max_name_length = 25,
 		tab_size = 30,
 		diagnostics = false,
@@ -14,8 +15,7 @@ require('bufferline').setup {
 			{
 				filetype = "NvimTree",
 				text = " File Explorer",
-				-- highlight = "Directory",
-				highlight = "NvimTreeNormal",
+				highlight = "Directory",
 				text_align = "center"
 			}
 		}

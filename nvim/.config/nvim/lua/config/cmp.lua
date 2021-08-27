@@ -1,7 +1,35 @@
 local luasnip = require('luasnip')
-local lspkind = require('lspkind')
-
 local cmp = require('cmp')
+
+local M = {}
+M.icons = {
+	Class = "ﴯ",
+	Color = "",
+	Constant = "",
+	Constructor = "",
+	Enum = "",
+	EnumMember = "",
+	Event = "",
+	Field = "ﰠ",
+	File = "",
+	Folder = "",
+	Function = "",
+	Interface = "",
+	Keyword = "",
+	Method = "",
+	Module = "",
+	Operator = "",
+	Property = "ﰠ",
+	Reference = "",
+	Snippet = "",
+	Struct = "",
+	Text = "",
+	TypeParameter = "",
+	Unit = "",
+	Value = "",
+	Variable = "",
+}
+
 cmp.setup {
 
 	documentation = {
@@ -14,13 +42,14 @@ cmp.setup {
 	-- lspkind
 	formatting = {
 		format = function(entry, vim_item)
-			-- vim_item.kind = lspkind.presets.default[vim_item.kind]
+			-- local lspkind = require('lspkind')
+			-- vim_item.kind = lspkind.presets.default[vim_item.kind] .. ' ' .. vim_item.kind
 			-- Add completion type in text in addition to icon
-			vim_item.kind = lspkind.presets.default[vim_item.kind] .. ' ' .. vim_item.kind
+			vim_item.kind = M.icons[vim_item.kind] .. ' ' .. vim_item.kind
 			vim_item.menu = ({
 				nvim_lsp = '[LSP]',
 				buffer = '[Buffer]',
-				buffer = '[Path]',
+				path = '[Path]',
 				luasnip = '[LuaSnip]',
 			})[entry.source.name]
 			return vim_item
@@ -82,6 +111,7 @@ cmp.setup {
 		{ name = 'path' },
 		{ name = 'nvim_lsp' },
 		{ name = 'luasnip' },
+		{ name = 'orgmode' }
 	},
 
 }

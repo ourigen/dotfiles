@@ -1,10 +1,9 @@
-return require('packer').startup({function()
+require('packer').startup({function()
 	use 'wbthomason/packer.nvim'
 
 	use { 
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate',
-		-- event = "BufRead",
 		config = function()
 			require('config.treesitter')
 		end
@@ -24,25 +23,13 @@ return require('packer').startup({function()
 		end
 	}
 
-	-- use {
-	-- 	'kdheepak/tabline.nvim',
-	-- 	requires = { 
-	-- 		{'hoob3rt/lualine.nvim'},
-	-- 		{'kyazdani42/nvim-web-devicons'}
-	-- 	},
-	-- 	config = function()
-	-- 		require('config.tabline')
-	-- 	end
-	-- }
-
 	use {
 		'kyazdani42/nvim-tree.lua',
-		requires = { 'kyazdani42/nvim-web-devicons'
 		-- requires = { 'kyazdani42/nvim-web-devicons', opt = true,
 		-- 	config = function()
 		-- 		require('config.devicons')
 		-- 	end
-		},
+		-- },
 		cmd = {'NvimTreeToggle', 'NvimTreeOpen', 'NvimTreeFindFile'},
 		config = function()
 			require('config.nvimtree')
@@ -72,13 +59,6 @@ return require('packer').startup({function()
 	}
 
 	-- use {
-	-- 	"folke/which-key.nvim",
-	-- 	config = function()
-	-- 		require('config.whichkey')
-	-- 	end
-	-- }
-
-	-- use {
 	-- 	'lewis6991/gitsigns.nvim',
 	-- 	requires = { 'nvim-lua/plenary.nvim' },
 	-- 	-- load only on git directories
@@ -99,24 +79,17 @@ return require('packer').startup({function()
 	}
 
 	use {
-		'onsails/lspkind-nvim',
-		-- after = 'nvim-lspconfig',
-		config = function()
-			require('config.lspkind')
-		end
-	}
-
-	use {
 		'nvim-telescope/telescope.nvim',
+		cmd = {'Telescope'},
 		requires = {
 			{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'},
-			{ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 		},
-		cmd = {'Telescope'},
 		config = function()
 			require('config.telescope')
 		end
 	}
+
+	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
 	use {
 		'kristijanhusak/orgmode.nvim',
@@ -126,9 +99,9 @@ return require('packer').startup({function()
 	}
 
 	use {
-		'akinsho/org-bullets.nvim', 
+		'akinsho/org-bullets.nvim',
 		ft = 'org',
-		requires = 'orgmode.nvim',
+		after = 'orgmode.nvim',
 		config = function()
 			require('config.orgbullets')
 		end
@@ -144,32 +117,15 @@ return require('packer').startup({function()
 
 	-- use {
 	-- 	'hrsh7th/nvim-compe',
-	-- 	event = "InsertEnter *",
+	-- 	event = "InsertEnter",
 	-- 	config = function()
 	-- 		require('config.compe')
 	-- 	end
 	-- }
 
-	use {
-		'hrsh7th/nvim-cmp',
-		requires = {
-			{'hrsh7th/cmp-buffer'},
-			{'hrsh7th/cmp-path'},
-			{'hrsh7th/cmp-nvim-lsp'},
-			-- {'hrsh7th/cmp-nvim-lua'},
-			-- {'hrsh7th/cmp-vsnip'},
-			{'saadparwaiz1/cmp_luasnip', requires = {'L3MON4D3/LuaSnip'}},
-			{'onsails/lspkind-nvim'}
-		},
-		-- event = "InsertEnter *",
-		config = function()
-			require('config.cmp')
-		end
-	}
-
 	-- use {
 	-- 	'hrsh7th/vim-vsnip',
-	-- 	event = "InsertEnter *",
+	-- 	event = "InsertEnter",
 	-- 	config = function()
 	-- 		require('config.vsnip')
 	-- 	end
@@ -177,9 +133,25 @@ return require('packer').startup({function()
 
 	use {
 		'L3MON4D3/LuaSnip',
-		requires = {'rafamadriz/friendly-snippets'},
+		-- event = "InsertEnter",
+		requires = 'rafamadriz/friendly-snippets',
 		config = function()
 			require('config.luasnip')
+		end
+	}
+
+	use {
+		'hrsh7th/nvim-cmp',
+		event = "InsertEnter",
+		requires = {
+			{'hrsh7th/cmp-buffer', after = 'nvim-cmp'},
+			{'hrsh7th/cmp-path', after = 'nvim-cmp'},
+			{'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp'},
+			-- {'hrsh7th/cmp-nvim-lua', after = "nvim-cmp"},
+			{'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp'},
+		},
+		config = function()
+			require('config.cmp')
 		end
 	}
 
@@ -191,20 +163,12 @@ return require('packer').startup({function()
 		end
 	}
 
-	-- use {
-	-- 	'b3nj5m1n/kommentary',
-	-- 	event = 'BufRead',
-	-- 	config = function()
-	-- 		require('config.kommentary')
-	-- 	end
-	-- }
-
 	use {
-		'terrortylor/nvim-comment',
+		'b3nj5m1n/kommentary',
 		event = 'BufRead',
 		config = function()
-			require('config.comment')
-		end,
+			require('config.kommentary')
+		end
 	}
 
 	use {
@@ -225,7 +189,8 @@ return require('packer').startup({function()
 
 	-- use {
 	-- 	'lervag/vimtex',
-	-- config = function()
+	-- 	ft = 'tex',
+	-- 	config = function()
 	-- 		require('config.vimtex')
 	-- 	end
 	-- }
