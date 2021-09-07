@@ -104,16 +104,13 @@ scrolling:
 # Font configuration
 font:
   normal:
-    # family: TerminessTTF Nerd Font Mono
     family: Iosevka Nerd Font Mono
-    # family: Iosevka
     style: Regular
 
   # Bold font face
   bold:
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    # family: TerminessTTF Nerd Font Mono
     family: Iosevka Nerd Font Mono
     style: Bold
 
@@ -122,7 +119,6 @@ font:
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
     family: Iosevka Nerd Font Mono
-    # family: TerminessTTF Nerd Font Mono
     style: Italic
 
   # Bold italic font face
@@ -130,7 +126,6 @@ font:
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
     family: Iosevka Nerd Font Mono
-    # family: TerminessTTF Nerd Font Mono
     style: Bold Italic
 
   # Point size

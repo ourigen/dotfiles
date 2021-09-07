@@ -11,8 +11,8 @@ SPEAK_CMD="${SPEAK_CMD:-"&>/dev/null espeak"}"
 # Setting configuration
 DEFAULT_WORK_LENGTH="${DEFAULT_WORK_LENGTH:-25}"
 DEFAULT_BREAK_LENGTH="${DEFAULT_BREAK_LENGTH}"
-NOTIFY_WORK="${NOTIFY_WORK:-"\"Get things done.\""}"
-NOTIFY_BREAK="${NOTIFY_BREAK:-"\"Take a break.\""}"
+NOTIFY_WORK="${NOTIFY_WORK:-"\"Let's get to work!\""}"
+NOTIFY_BREAK="${NOTIFY_BREAK:-"\"Okay, take a break.\""}"
 SPEAK_WORK="${SPEAK_WORK:-"$NOTIFY_WORK"}"
 SPEAK_BREAK="${SPEAK_BREAK:-"$NOTIFY_BREAK"}"
 

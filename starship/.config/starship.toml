@@ -1,5 +1,34 @@
+# Disable the blank line at the start of the prompt
 add_newline = false
 
-# `line_break` module separates the prompt into two lines.
+# Make the prompt a single line.
 [line_break]
-disabled= true
+disabled = true
+
+[git_status]
+ahead = "⇡"
+behind = "⇣"
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "ﳒ "
+
+[rust]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[package]
+disabled = true

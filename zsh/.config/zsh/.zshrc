@@ -21,7 +21,7 @@ HISTSIZE=1000                  # The maximum number of events stored in the inte
 SAVEHIST=1000                  # The maximum number of history events to save in the history file.
 setopt APPEND_HISTORY          # Append to the history file rather than replace it.
 setopt AUTO_CD                 # [default] If can't execute the directory, perform the cd command to that.
-# setopt EXTENDED_GLOB           # Treat the `#`, `~` and `^` characters as part of patterns for globbing.
+setopt EXTENDED_GLOB           # Treat the `#`, `~` and `^` characters as part of patterns for globbing.
 setopt BRACE_CCL               # Expand expressions in braces which would not otherwise undergo brace expansion.
 setopt GLOB_DOTS               # Don't require a leading '.' in a filename to be matched explicitly.
 setopt MARK_DIRS               # Append a trailing `/` to all directory names resulting from globbing.
@@ -50,18 +50,16 @@ zle -N edit-command-line
 # http://zsh.sourceforge.net/Doc/Release/Completion-System.html
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 # In the form ‘yes=num’, where ‘yes’ may be any of the ‘true’ values (‘yes’, ‘true’, ‘on’ and ‘1’), menu completion will be turned on if there are at least num matches. In the form ‘yes=long’, menu completion will be turned on if the list does not fit on the screen.
-# zstyle ':completion:*' menu select=long
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # Use color specificatins set up for ls
-# zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-# Enable keyboard navigation of completions in menu
-zstyle ':completion:*' menu select
+# Enable keyboard navigation of completions in menu (start menu only if list doesn’t fit the screen)
+zstyle ':completion:*' menu select=long
 # Make completion:
 # - Try exact (case-sensitive) match first.
 # - Then fall back to case-insensitive.
 # - Accept abbreviations after . or _ or - (ie. f.b -> foo.bar).
 # - Substring complete (ie. bar -> foobar).
-zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 # Allow completion of ..<Tab> to ../ and beyond.
 zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(..) ]] && reply=(..)'
 # zstyle ':completion:*' verbose yes
@@ -81,11 +79,7 @@ zstyle ':completion:*' group-name ''
 
 source "$XDG_DATA_HOME/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$XDG_DATA_HOME/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-VIM_MODE_TRACK_KEYMAP=no
-MODE_INDICATOR=""
-# source "$XDG_DATA_HOME/zsh/plugins/zsh-vim-mode/zsh-vim-mode.plugin.zsh"
-# autojump scripts
-# [[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
+source "$XDG_DATA_HOME/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh"
 
 ### BINDINGS ### {{{
 bindkey -v # Use Vi mode
@@ -105,8 +99,6 @@ bindkey '^E' end-of-line
 
 # }}}
 
-# source "$ZDOTDIR/prompt.zsh"
-
 alias ls="ls --color=auto --group-directories-first --human-readable"
 alias grep="grep --color=auto"
 alias rm="rm --recursive --verbose"
@@ -118,28 +110,26 @@ alias ":q"="exit"
 alias v="nvim"
 alias g="git"
 alias o="xdg-open"
-# alias vc="$EDITOR $XDG_CONFIG_HOME/nvim/init.vim"
+# alias vc="$EDITOR $XDG_CONFIG_HOME/nvim/init.lua"
 # alias zc="$EDITOR $ZDOTDIR/.zshrc"
 alias so="source $ZDOTDIR/.zshrc"
-# alias i="pacmk"
-# alias u="pacrm"
 alias ssh="env TERM=xterm-256color ssh"
 
 # FUNCTIONS {{{
 function nn() {
-	ORG_REFILE="$HOME/sync/org/inbox.org"
+	ORG_REFILE="$HOME/sync/Notes/inbox.org"
 	if [ -z "$1" ]; then
 		"$EDITOR" "$ORG_REFILE"
 	else
-		printf "\n* TODO %s\nSCHEDULED: <%s>\n" "$*" "$(date +'%Y-%m-%d %a %H:%M')" >> "$ORG_REFILE"
+		printf "\n* TODO %s\n<%s>\n" "$*" "$(date +'%Y-%m-%d %a %H:%M')" >> "$ORG_REFILE"
 	fi
 }
 
 function fn() {
-	rg  -n -i '\*+\s\w*\s' "$HOME/sync/org/" | fzf --layout=reverse --height 50% --ansi | sed -E 's/(.*):([0-9]+):.*/\1 +\2/g' | xargs -r ${EDITOR:-nvim}
+	rg  -n -i '\*+\s\w*\s' "$HOME/sync/Notes/" | fzf --layout=reverse --height 50% --ansi | sed -E 's/(.*):([0-9]+):.*/\1 +\2/g' | xargs -r ${EDITOR:-nvim}
 }
 
-function c() {
+function conf() {
 	if [[ -z $1 ]]; then
 		fd --type f --hidden . "$HOME/projects/dotfiles/" | fzf | xargs -r $EDITOR
 	else
@@ -147,49 +137,30 @@ function c() {
 	fi
 }
 
-function e() {
-	if [[ -z $1 ]]; then
-		fzf | xargs -r $EDITOR
-	else
-		fd --type f --hidden $1 | xargs -r $EDITOR
-	fi
-}
-
-function mru() {
-	# ignore pdf, png, jpg, doc, docx, xls, xlsx, ppt
-	fd -H -t f -E '*.[pjxd][dnplo][fgsct]*' --changed-within 5d | fzf --preview='bat --color=always {}' --preview-window=right:50% | xargs -r $EDITOR
-}
-
 function pacfd() {
-	# pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S
+	# Use paru so that both AUR and Arch repo are searched
 	paru -Slq | fzf --multi --preview 'paru -Si {1}' | xargs -ro paru -S
 }
 
 function pacrm() {
-	# pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns
-	paru -Qq | fzf --multi --preview 'paru -Qi {1}' | xargs -ro paru -Rns
+	pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns
 }
 
 function mkcd() {
 	mkdir -p "$@" && cd "$_"
 }
 
-
 function 2pdf() {
 	libreoffice --convert-to pdf $@
-}
-
-function 2xlsx() {
-	libreoffice --convert-to xlsx $@
 }
 
 function 2bib() {
 	if [ -f "$1" ]; then
 		DOI=$(pdfinfo "$1" | grep -io "doi:.*" | grep -o "10.[^)^ ]*") ||
-			DOI=$(pdftotext "$1" 2>/dev/null - | grep -io "doi:.*" -m 1 | grep -o "10.[^)^ ]*") ||
-			DOI=$(pdftotext "$1" 2>/dev/null - | grep -io "doi\\.org/.*" -m 1 | grep -o "10.[^)^ ]*")
-				else
-					DOI="$1"
+		DOI=$(pdftotext "$1" 2>/dev/null - | grep -io "doi:.*" -m 1 | grep -o "10.[^)^ ]*") ||
+		DOI=$(pdftotext "$1" 2>/dev/null - | grep -io "doi\\.org/.*" -m 1 | grep -o "10.[^)^ ]*")
+	else
+		DOI="$1"
 	fi
 
 	printf "Downloading bibliographies for %s... " "$1"
@@ -201,44 +172,10 @@ function 2opus() {
 	youtube-dl --ignore-errors --extract-audio --audio-quality 0 --audio-format opus -o '$HOME/downloads/music/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
 
-# function extr() {
-# 	if [ -z "$1" ]; then
-# 		echo "Usage: extr <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
-# 		echo "       extr <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
-# 		return 1
-# 	else
-# 		for n in $@; do
-# 			if [ -f "$n" ] ; then
-# 				case "${n%,}" in
-# 					*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
-# 						tar xvf "$n"       ;;
-# 					*.lzma)      unlzma ./"$n"      ;;
-# 					*.bz2)       bunzip2 ./"$n"     ;;
-# 					*.rar)       unrar x -ad ./"$n" ;;
-# 					*.gz)        gunzip ./"$n"      ;;
-# 					*.zip)       unzip ./"$n"       ;;
-# 					*.z)         uncompress ./"$n"  ;;
-# 					*.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)
-# 						7z x ./"$n"        ;;
-# 					*.xz)        unxz ./"$n"        ;;
-# 					*.exe)       cabextract ./"$n"  ;;
-# 					*)
-# 						echo "extr: '$n' - unknown archive method"
-# 						return 1
-# 						;;
-# 				esac
-# 			else
-# 				echo "'$n' - file does not exist"
-# 				return 1
-# 			fi
-# 		done
-# 	fi
-# }
-
-# adds a git subcommand "root" such that:
-	# git root # changes to the repo root
-	# git root COMMAND # runs COMMAND from repo root (eg. git root ls)
 function git() {
+	# adds a git subcommand "root" such that:
+	# `git root` changes to the repo root
+	# `git root COMMAND`` runs COMMAND from repo root (eg. git root ls)
 	if [ "$1" = "root" ]; then
 		shift
 		local ROOT="$(command git rev-parse --show-toplevel 2> /dev/null || echo -n .)"
@@ -254,3 +191,9 @@ function git() {
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+
+function set_win_title() {
+	echo -ne "\033]0;${USER}@${HOST}: ${PWD/#$HOME/~} - Alacritty\007"
+}
+
+precmd_functions+=(set_win_title)

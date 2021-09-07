@@ -4,7 +4,6 @@ font pango:Iosevka Nerd Font Mono 10
 
 set {
 	# Theme
-	$wallpaper $HOME/pictures/wallpapers/tokyonight/topography-a9b1d6.jpg
 	$white #c0caf5
 	$black #24283b
 	$gray #414868
@@ -36,10 +35,10 @@ gaps {
 	outer $outer_gaps
 }
 
-# OUTPUT {{{
+# OUTPUT
 # swaymsg -t get_outputs
 
-output * background $wallpaper fill
+output * background $HOME/pictures/wallpapers/tokyonight/tokyonight_topography.jpg fill
 
 output $laptop {
 	resolution 1920x1080
@@ -63,9 +62,7 @@ workspace {
 	9 output $monitor
 }
 
-# }}}
-
-# INPUT {{{
+# INPUT
 # See man sway-input (5) for details
 # swaymsg -t get_inputs
 
@@ -89,58 +86,28 @@ input "1:1:AT_Translated_Set_2_keyboard" {
 }
 
 input "9580:110:HUION_420" {
-	# map_to_output $laptop
+	map_to_output $laptop
 	tool_mode * relative
 	# map_from_region 0.22x0.22 0.78x0.78
 }
-# }}}
 
 # Specific window rules for apps
 # app_id are specific to Wayland
 # class are specific to X11
 
 for_window {
-	[class="^.*"] inhibit_idle fullscreen
-	[app_id="^.*"] inhibit_idle fullscreen
 	[app_id="firefox" title="^Picture-in-Picture$"] floating enable, resize set 480px 270px, move position 1420px 768px, sticky enable
 	[app_id="firefox" title="^Firefox — Sharing Indicator$"] floating enable, no_focus, move position -1920px -1080px
 	[app_id="udiskie"] floating enable; resize set 480px 270px; move position center
+	# If an app is fullscreen, don't lock when idle
+	[class="^.*"] inhibit_idle fullscreen
+	[app_id="^.*"] inhibit_idle fullscreen
+	# Popup scratchpad
 	[app_id="popup"] floating enable; sticky enable; resize set 750px 500px; move scratchpad; scratchpad show; move position center
 }
 
-# SWAYBAR {{{
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-	swaybar_command waybar
-	# When the status_command prints a new line to stdout, swaybar updates.
-	# status_command while $XDG_CONFIG_HOME/sway/swaybar.sh; do sleep 60; done
-
-	# position top
-	# status_command i3blocks
-	# pango_markup enabled
-	# separator_symbol '  '
-	# status_padding 0
-	# status_edge_padding 10
-	# # wrap_scroll yes # scrolling through workspaces
-	# # strip_workspace_numbers yes
-	# colors {
-	# 	separator $white
-	# 	statusline $white
-	# 	background $black
-	# 	#                  $border    $background  $textcolor
-	# 	urgent_workspace   $black     $black       $red
-	# 	focused_workspace  $gray  $gray    $white
-	# 	active_workspace   $gray  $gray    $white
-	# 	inactive_workspace $black     $black       $white
-	# 	binding_mode       $red       $red         $black
-	# }
-	# tray_padding 4
-	# tray_bindcode {
-	# 	272 Activate
-	# 	273 ContextMenu
-	# }
-}
-# }}}
+# Read `man 5 sway-bar` for more information about this section
+bar swaybar_command waybar
 
 # borders only displayed if gaps = 0 and workspace has more than one child
 # smart_borders no_gaps
@@ -166,7 +133,7 @@ client.urgent           $yellow      $black      $white  $red        $red
 # indicator: The color used to indicate where a new view will open. In a tiled container, this would paint the right border of the current view if a new view would be opened to the right.
 # child_border: The border around the view itself.
 
-# GTK3 https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
+# https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
 # set $gnome-schema org.gnome.desktop.interface
 # exec_always {
 	# gsettings set $gnome-schema icon-theme 'Qogir-dark'
@@ -177,64 +144,53 @@ client.urgent           $yellow      $black      $white  $red        $red
 
 # BINDINGS {{{
 
-bindsym {
-	$mod+q kill
-	$mod+Shift+c reload
-}
+bindsym $mod+q kill
+bindsym $mod+Shift+c reload
 
 # Hotkeys
-bindsym {
-	$mod+Return exec $term
-	# Note: pass the final command to swaymsg so that the resulting window can be opened on the original workspace that the command was run on.
-	$mod+space exec wofi --show run | xargs swaymsg exec --
-	$mod+w exec firefox
-	$mod+n exec $term -e nnn
-	$mod+m exec $term -e ncmpcpp
-	# Quick terminal
-	$mod+Shift+space exec $term --class "popup"
+bindsym $mod+Return exec $term
+# Note: pass the final command to swaymsg so that the resulting window can be opened on the original workspace that the command was run on.
+bindsym $mod+space exec wofi --show run | xargs swaymsg exec --
+bindsym $mod+w exec firefox
+bindsym $mod+n exec $term -e nnn
+bindsym $mod+m exec $term -e ncmpcpp
+# Quick terminal
+bindsym $mod+Shift+space exec $term --class "popup"
 
-	# bemenu scripts
-	$mod+bracketleft exec webmenu
-	$mod+bracketright exec helpmenu
-	$mod+p exec filemenu
-	$mod+backslash exec killmenu
-	# Alt-tab to switch window focus
-	# Mod1+Tab exec bemenu-window_select
+bindsym $mod+bracketleft exec webmenu
+bindsym $mod+bracketright exec helpmenu
+bindsym $mod+p exec filemenu
+bindsym $mod+backslash exec killmenu
+# Alt-tab to switch window focus
+# Mod1+Tab exec bemenu-window_select
 
-	Print exec "grimshot --notify save area $HOME/pictures/screenshots/screen-$(date +'%Y-%m-%d_%H%M%S').png"
-	Shift+Print exec sway-recorder
+bindsym Print exec "grimshot --notify save area $HOME/pictures/screenshots/screen-$(date +'%Y-%m-%d_%H%M%S').png"
+bindsym Shift+Print exec sway-recorder
 
-	# use --locked so the keys can be accessed while sway is locked
+# use --locked so the keys can be accessed while sway is locked
 
-	# barify version with display bar
-	--locked XF86MonBrightnessUp exec barify brightness up
-	--locked XF86MonBrightnessDown exec barify brightness down
-	--locked XF86AudioRaiseVolume exec barify volume up
-	--locked XF86AudioLowerVolume exec barify volume down
+# barify version with display bar
+bindsym --locked XF86MonBrightnessUp exec barify brightness up
+bindsym --locked XF86MonBrightnessDown exec barify brightness down
+bindsym --locked XF86AudioRaiseVolume exec barify volume up
+bindsym --locked XF86AudioLowerVolume exec barify volume down
 
-	# --locked XF86MonBrightnessUp exec brightnessctl -q set 2%+
-	# --locked XF86MonBrightnessDown exec brightnessctl -q set 2%-
-	# --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-	# --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-	--locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-	--locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+# not using barify for muting since Thinkpads have light indicators anyways
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-	--locked XF86AudioNext exec mpc next
-	--locked XF86AudioPrev exec mpc prev
-	--locked XF86AudioPause exec mpc pause
-	--locked XF86AudioPlay exec mpc play
+bindsym --locked XF86AudioNext exec mpc next
+bindsym --locked XF86AudioPrev exec mpc prev
+bindsym --locked XF86AudioPause exec mpc pause
+bindsym --locked XF86AudioPlay exec mpc play
 
-	--locked $mod+Shift+backslash exec mpc toggle
-	--locked $mod+Shift+bracketleft exec mpc prev
-	--locked $mod+Shift+bracketright exec mpc next
-
-}
+bindsym --locked $mod+Shift+backslash exec mpc toggle
+bindsym --locked $mod+Shift+bracketleft exec mpc prev
+bindsym --locked $mod+Shift+bracketright exec mpc next
 
 # Disable laptop screen when lid is closed
-bindswitch {
-	--reload --locked lid:on output $laptop disable
-	--reload --locked lid:off output $laptop enable
-}
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
 # }}}
 
 # LAYOUTS {{{
@@ -245,55 +201,51 @@ bindswitch {
 # mouse button for dragging.
 floating_modifier $mod normal
 
-# Container management
-bindsym {
-	# Toggle the current focus between tiling and floating mode
-	$mod+f floating toggle
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+f floating toggle
+# Swap focus between the tiling area and the floating area
+bindsym $mod+Shift+f focus mode_toggle
 
-	# Swap focus between the tiling area and the floating area
-	$mod+Shift+f focus mode_toggle
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
-	# Move your focus around
-	$mod+$left focus left
-	$mod+$down focus down
-	$mod+$up focus up
-	$mod+$right focus right
+# Move the focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
-	# Move the focused window
-	$mod+Shift+$left move left
-	$mod+Shift+$down move down
-	$mod+Shift+$up move up
-	$mod+Shift+$right move right
+# Resizing containers:
+bindsym $mod+Ctrl+$left resize shrink width 25px
+bindsym $mod+Ctrl+$right resize grow width 25px
+bindsym $mod+Ctrl+$up resize grow height 10px
+bindsym $mod+Ctrl+$down resize shrink height 10px
 
-	# Resizing containers:
-	$mod+Ctrl+$left resize shrink width 25px
-	$mod+Ctrl+$right resize grow width 25px
-	$mod+Ctrl+$up resize grow height 10px
-	$mod+Ctrl+$down resize shrink height 10px
+# Resizing gaps
+bindsym $mod+Ctrl+m gaps inner all set 0,gaps outer all set 0
+bindsym $mod+Ctrl+n gaps inner all set $inner_gaps,gaps outer all set $outer_gaps
+bindsym $mod+Ctrl+z gaps inner all plus $inner_gaps,gaps outer all plus $outer_gaps
+bindsym $mod+Ctrl+x gaps inner all minus $inner_gaps,gaps outer all minus $outer_gaps
 
-	# Resizing gaps
-	$mod+Ctrl+m gaps inner all set 0,gaps outer all set 0
-	$mod+Ctrl+n gaps inner all set $inner_gaps,gaps outer all set $outer_gaps
-	$mod+Ctrl+z gaps inner all plus $inner_gaps,gaps outer all plus $outer_gaps
-	$mod+Ctrl+x gaps inner all minus $inner_gaps,gaps outer all minus $outer_gaps
+# Cycle between horizontal and vertical split layout
+bindsym $mod+t split toggle
+# bindsym $mod+s split vertical
+# bindsym $mod+v split horizontal
 
-	# Cycle between horizontal and vertical split layout
-	$mod+t split toggle
-	# $mod+s split vertical
-	# $mod+v split horizontal
+# Cycle between stacking, tabbed, and last split layout
+# bindsym $mod+c layout toggle all
 
-	# Cycle between stacking, tabbed, and last split layout
-	$mod+c layout toggle all
+# Make the current focus fullscreen
+bindsym $mod+shift+m fullscreen
 
-	# Make the current focus fullscreen
-	F11 fullscreen
-
-	# Move the currently focused window to the scratchpad
-	$mod+Shift+minus move scratchpad
-	# Show the next scratchpad window or hide the focused scratchpad window.
-	# If there are multiple scratchpad windows, cycles through them.
-	$mod+minus scratchpad show
-}
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, cycles through them.
+bindsym $mod+minus scratchpad show
 # }}}
 
 # WORKSPACES {{{
@@ -324,7 +276,6 @@ bindsym {
 	$mod+Shift+9 move container to workspace number 9
 
 	# Prior = PageUp, Next = PageDown
-	# GNOME-like workspace movements
 	$mod+Prior exec sway-workspace prev
 	$mod+Next exec sway-workspace next
 	$mod+Shift+Prior exec sway-workspace prev move
