@@ -12,6 +12,11 @@ require('telescope').setup{
 		border                  = {},
 		borderchars             = {"─", "│", "─", "│", "┌", "┐", "┘", "└"},
 	},
+	pickers = {
+		buffers = {
+			sort_lastused = true,
+		}
+	},
 	extensions = {
 		fzf = {
 			fuzzy = true,                    -- false will only do exact matching

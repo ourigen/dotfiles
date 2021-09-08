@@ -97,16 +97,14 @@ cmp.setup {
 
 	sources = {
 		{ name = 'buffer',
-			opts = {
-				-- show only visible buffers
-				get_bufnrs = function()
-					local bufs = {}
-					for _, win in ipairs(vim.api.nvim_list_wins()) do
-						bufs[vim.api.nvim_win_get_buf(win)] = true
-					end
-					return vim.tbl_keys(bufs)
-				end
-			}
+			-- opts = {
+			-- 	-- show only visible buffers
+			-- 	get_bufnrs = function()
+			-- 		return vim.tbl_filter(function(bufnr)
+			-- 			return vim.api.nvim_buf_is_valid(bufnr) and vim.api.nvim_buf_is_loaded(bufnr)
+			-- 		end, vim.api.nvim_list_bufs())
+			-- 	end
+			-- }
 		},
 		{ name = 'path' },
 		{ name = 'nvim_lsp' },

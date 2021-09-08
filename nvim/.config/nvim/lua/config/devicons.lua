@@ -53,9 +53,24 @@ require'nvim-web-devicons'.setup {
 			color = "#db4b4b"
 		},
 		org = {
-			icon = "ﴬ",
-			color = "#9d7cd8",
+			icon = "",
+			color = "#519aba",
 			name = "org"
+		},
+		png = {
+			icon = "",
+			color = "#a074c4",
+			name = "png"
+		},
+		jpg = {
+			icon = "",
+			color = "#a074c4",
+			name = "jpg"
+		},
+		pdf = {
+			icon = "",
+			color = "#b30b00",
+			name = "pdf"
 		},
 	};
 }

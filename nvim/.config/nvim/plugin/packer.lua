@@ -1,7 +1,7 @@
 require('packer').startup({function()
 	use 'wbthomason/packer.nvim'
 
-	use { 
+	use {
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate',
 		config = function()
@@ -25,19 +25,15 @@ require('packer').startup({function()
 
 	use {
 		'kyazdani42/nvim-tree.lua',
-		-- requires = { 'kyazdani42/nvim-web-devicons', opt = true,
-		-- 	config = function()
-		-- 		require('config.devicons')
-		-- 	end
-		-- },
 		cmd = {'NvimTreeToggle', 'NvimTreeOpen', 'NvimTreeFindFile'},
 		config = function()
 			require('config.nvimtree')
 		end
 	}
 
-	use {
+	use  {
 		'kyazdani42/nvim-web-devicons',
+		-- module = 'nvim-web-devicons',
 		config = function()
 			require('config.devicons')
 		end
@@ -58,17 +54,13 @@ require('packer').startup({function()
 		end
 	}
 
-	-- use {
-	-- 	'lewis6991/gitsigns.nvim',
-	-- 	requires = { 'nvim-lua/plenary.nvim' },
-	-- 	-- load only on git directories
-	-- 	cond = function()
-	-- 		return vim.fn.isdirectory ".git" == 1
-	-- 	end,
-	-- 	config = function()
-	-- 		require('config.gitsigns')
-	-- 	end
-	-- }
+	use {
+		"folke/zen-mode.nvim",
+		cmd = 'ZenMode',
+		config = function()
+			require('config.zenmode')
+		end
+	}
 
 	use {
 		'neovim/nvim-lspconfig',
@@ -82,14 +74,14 @@ require('packer').startup({function()
 		'nvim-telescope/telescope.nvim',
 		cmd = {'Telescope'},
 		requires = {
-			{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'},
+			-- Lazy load only when require('module') is called
+			{ 'nvim-lua/plenary.nvim', module = "plenary"},
+			{ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 		},
 		config = function()
 			require('config.telescope')
 		end
 	}
-
-	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
 	use {
 		'kristijanhusak/orgmode.nvim',
@@ -101,7 +93,6 @@ require('packer').startup({function()
 	use {
 		'akinsho/org-bullets.nvim',
 		ft = 'org',
-		after = 'orgmode.nvim',
 		config = function()
 			require('config.orgbullets')
 		end
@@ -133,8 +124,7 @@ require('packer').startup({function()
 
 	use {
 		'L3MON4D3/LuaSnip',
-		-- event = "InsertEnter",
-		requires = 'rafamadriz/friendly-snippets',
+		requires = {'rafamadriz/friendly-snippets', opt = true},
 		config = function()
 			require('config.luasnip')
 		end
@@ -146,7 +136,7 @@ require('packer').startup({function()
 		requires = {
 			{'hrsh7th/cmp-buffer', after = 'nvim-cmp'},
 			{'hrsh7th/cmp-path', after = 'nvim-cmp'},
-			{'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp'},
+			{'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp', module = 'cmp_nvim_lsp'},
 			-- {'hrsh7th/cmp-nvim-lua', after = "nvim-cmp"},
 			{'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp'},
 		},
@@ -175,7 +165,7 @@ require('packer').startup({function()
 		"blackCauldron7/surround.nvim",
 		event = 'BufRead',
 		config = function()
-			require('config.surround') 
+			require('config.surround')
 		end
 	}
 
@@ -185,7 +175,7 @@ require('packer').startup({function()
 		setup = function()
 			require('config.markdown')
 		end
-	} 
+	}
 
 	-- use {
 	-- 	'lervag/vimtex',
@@ -195,12 +185,13 @@ require('packer').startup({function()
 	-- 	end
 	-- }
 
-	use 'romainl/vim-cool'
-	use 'wellle/targets.vim'
 	use {
 		'tpope/vim-eunuch',
 		cmd = {'Move', 'Rename', 'Delete', 'Chmod', 'SudoWrite'},
 	}
+
+	use 'romainl/vim-cool'
+	use 'wellle/targets.vim'
 	use 'tommcdo/vim-exchange'
 	-- use 'tommcdo/vim-lion'
 

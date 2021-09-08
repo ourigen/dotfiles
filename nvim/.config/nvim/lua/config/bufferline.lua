@@ -1,9 +1,8 @@
 require('bufferline').setup {
 	options = {
-		mappings = false,
 		indicator_icon = '▎',
-		modified_icon = '',
 		close_icon = '',
+		modified_icon = 'ﱣ',
 		left_trunc_marker = '',
 		right_trunc_marker = '',
 		-- show_buffer_icons = false,
@@ -14,8 +13,8 @@ require('bufferline').setup {
 		offsets = {
 			{
 				filetype = "NvimTree",
-				text = " File Explorer",
-				highlight = "Directory",
+				text = "",
+				highlight = "NvimTreeNormal",
 				text_align = "center"
 			}
 		}

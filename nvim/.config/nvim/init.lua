@@ -4,16 +4,15 @@ vim.opt.title = true
 vim.opt.titlestring = '%f - Neovim'             -- title of the terminal window
 vim.opt.laststatus = 2                          -- always show statusline on last window
 vim.opt.termguicolors = true                    -- use gui :highlight attributes instead of cterm attributes
-vim.opt.joinspaces = false                      -- insert only one spaces after a '.', '?' and '!' with a join command
 vim.opt.formatoptions:append { 'n' }            -- when formatting text, recognize numbered lists
--- vim.opt.timeoutlen=250                       -- time in milliseconds to wait for a mapped sequence to complete.
 vim.opt.scrolloff = 3                           -- minimal screen lines to keep above and below cursor
 vim.opt.number = true                           -- print line number in front of each line
 vim.opt.relativenumber = true                   -- show line number relative to cursor line in front of each line
 vim.opt.splitbelow = true                       -- :split will put new window below current
 vim.opt.splitright = true                       -- :vsplit will put new window right of current one
 -- vim.opt.textwidth=120                           -- maximum width of text that is being inserted
-vim.opt.synmaxcol=1000                          -- maximum column in which to search for syntax items
+-- vim.opt.synmaxcol = 1000                        -- maximum column in which to search for syntax items
+-- vim.opt.timeoutlen=250                       -- time in milliseconds to wait for a mapped sequence to complete.
 vim.opt.linebreak = true                        -- wrap long lines at a character in 'breakat'
 vim.opt.breakindent = true                      -- every wrapped line will continue visually indented
 vim.opt.ignorecase = true                       -- ignore case in search patterns
@@ -58,7 +57,6 @@ vim.opt.listchars = {
 vim.opt.pumheight = 25                          -- maximum number of items to show in completion popup
 vim.opt.cursorline = true                       -- highlight line of cursor
 vim.opt.lazyredraw = true                       -- don't redraw screen macros, registers and commands that haven't been typed
-vim.opt.hidden = true                           -- buffer becomes hidden when it's abandoned
 vim.opt.clipboard = 'unnamedplus'               -- prepend clipboard register '+' for all yank, delete, change and put operations
 vim.opt.omnifunc = 'syntaxcomplete#Complete'    -- used for omni completion i_CTRL-X_CTRL-O
 vim.opt.dictionary:append {                     -- used for keyword completion i_CTRL-X_CTRL-K
@@ -107,19 +105,12 @@ if vim.env.USER == 'root' then
 	vim.opt.shadafile = 'NONE'
 	vim.opt.undofile = false
 else
-vim.opt.shada = "'0,<0,s10,f0,h"      -- store maximum of marks for 0 file, 0 lines per register, 10KiB size, 0 files
--- shada defaults: Neovim: !,'100,<50,s10,h
--- - ! save/restore global variables (only all-uppercase variables)
--- - '[n] save/restore marks from last [n] files
--- - <[n] save/restore [n] lines from each register
--- - s[n] max item size [n]KB
-	-- - h do not save/restore 'hlsearch' setting
-	-- - f[n] store [n] file marks
+	vim.opt.shada = "'0,<0,s10,f0,h"      -- store maximum of marks for 0 file, 0 lines per register, 10KiB size, 0 files
 	vim.opt.undofile = true             -- automatically saves persistent undo history
 	vim.opt.undolevels=500              -- maximum number of changes that can be undone
 end
 
-vim.opt.swapfile = false                          -- don't create swapfile for uffer
+vim.opt.swapfile = false                          -- don't create swapfile for buffer
 
 if vim.fn.executable('rg') then
 	vim.opt.grepprg='rg --no-heading --smart-case --vimgrep '
@@ -176,8 +167,6 @@ vim.api.nvim_set_keymap('n', 'N', "'nN'[v:searchforward]", { noremap = true, exp
 vim.api.nvim_set_keymap('x', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true })
 vim.api.nvim_set_keymap('o', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true })
 
--- mapped by default
--- vim.api.nvim_set_keymap('n', 'Y', 'y$', {noremap = true})
 vim.api.nvim_set_keymap('n', 'vv', '^vg_', {noremap = true})
 vim.api.nvim_set_keymap('n', 'zp', 'zMzvzz', {noremap = true})
 -- vim.api.nvim_set_keymap('n', 'vaz', 'v[zo]z$', {noremap = true})
