@@ -1,5 +1,4 @@
-# 🚦README Under Construction.
-# There's No Place Like ~/
+# There's No Place Like ~
 
 ## 📷 Screenshot
 
@@ -7,7 +6,7 @@
 
 ## ⚙️ Configuration
 
-Here you will find the configuration for some of the software that I use
+Here you will find the configuration for some of the software that I use. Please don't clone the repository because things might break on your system.
 
 * sway 
 * waybar
