@@ -1,4 +1,4 @@
-vim.g.nvim_tree_width = 35
+vim.g.nvim_tree_width = 32
 -- vim.g.nvim_tree_auto_open = 1     -- opens the tree when typing `vim $DIR` or `vim`
 vim.g.nvim_tree_auto_close = 1    -- closes the tree when it's the last window
 vim.g.nvim_tree_add_trailing = 1  -- append trailing slash to folders

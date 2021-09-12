@@ -32,13 +32,12 @@ require('orgmode').setup({
 		},
 		n = {
 			description = 'Note',
-			template = '* %?\n%U',
-			target = '~/sync/Notes/personal.org'
+			template = '* %? :NOTE:\n%U',
 		},
 		j = {
 			description = 'Journal',
-			template = '*** %<%d %B %Y>\n%U %?',
-			target = '~/sync/Notes/personal.org'
+			template = '*** %<%Y-%m-%d %A>\n  %?',
+			target = '~/sync/Notes/journal.org'
 		}
 	},
 	mappings = {

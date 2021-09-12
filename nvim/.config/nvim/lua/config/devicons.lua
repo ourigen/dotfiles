@@ -7,16 +7,6 @@ require'nvim-web-devicons'.setup {
 			color = "#6d8086",
 			name = "Default",
 		},
-		zsh = {
-			icon = "",
-			color = "#428850",
-			name = "zsh"
-		},
-		sh = {
-			icon = "",
-			color = "#428850",
-			name = "sh"
-		},
 		html = {
 			icon = "",
 			color = "#3d59a1",
@@ -37,26 +27,6 @@ require'nvim-web-devicons'.setup {
 			name = "ts",
 			color = "#e0af68"
 		},
-		dockerfile = {
-			icon = "",
-			name = "Dockerfile",
-			color = "#3d59a1",
-		},
-		rb = {
-			icon = "",
-			name = "rb",
-			color = "#f7768e"
-		},
-		lock = {
-			icon = "",
-			name = "lock",
-			color = "#db4b4b"
-		},
-		org = {
-			icon = "",
-			color = "#519aba",
-			name = "org"
-		},
 		png = {
 			icon = "",
 			color = "#a074c4",
@@ -71,6 +41,16 @@ require'nvim-web-devicons'.setup {
 			icon = "",
 			color = "#b30b00",
 			name = "pdf"
+		},
+		dockerfile = {
+			icon = "",
+			name = "Dockerfile",
+			color = "#3d59a1",
+		},
+		lock = {
+			icon = "",
+			name = "lock",
+			color = "#db4b4b"
 		},
 	};
 }

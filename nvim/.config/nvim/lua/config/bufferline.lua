@@ -1,15 +1,16 @@
 require('bufferline').setup {
 	options = {
-		indicator_icon = '▎',
+		-- indicator_icon = '▎',
+		indicator_icon = ' ',
 		close_icon = '',
 		modified_icon = 'ﱣ',
 		left_trunc_marker = '',
 		right_trunc_marker = '',
-		-- show_buffer_icons = false,
-		max_name_length = 25,
-		tab_size = 30,
+		max_name_length = 20,
+		tab_size = 25,
 		diagnostics = false,
-		separator_style = 'thin',
+		show_close_icon = false,
+		-- separator_style = 'slant',
 		offsets = {
 			{
 				filetype = "NvimTree",

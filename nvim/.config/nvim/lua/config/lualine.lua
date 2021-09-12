@@ -1,9 +1,10 @@
 -- require('lualine').setup{
 -- 	options = {
 -- 		icons_enabled = true,
--- 		component_separators = {'', ''},
--- 		section_separators = {'', ''},
--- 		disabled_filetypes = { 'qf', 'NvimTree', 'Trouble' }
+-- 		component_separators = {'', ''},
+-- 		section_separators = {'', ''},
+-- 		disabled_filetypes = { 'qf', 'NvimTree', 'Trouble' },
+-- 		theme = 'tokyonight',
 -- 	},
 -- 	sections = {
 -- 		lualine_a = {'mode'},
@@ -21,6 +22,9 @@
 -- 				color_added    = "#9ece6a",
 -- 				color_modified = "#e0af68",
 -- 				color_removed  = "#f7768e",
+-- 				condition = function()
+-- 					return vim.fn.winwidth(0) > 120
+-- 				end,
 -- 			},
 -- 			{ 'diagnostics',
 -- 				sources = {'nvim_lsp'},
@@ -45,7 +49,7 @@
 
 -- DOOM MODELINE
 local lualine = require('lualine')
-local colors = require("tokyonight.colors").setup(config)
+local colors = require("tokyonight.colors").setup()
 
 local conditions = {
 	buffer_not_empty = function()
@@ -71,7 +75,7 @@ local config = {
 			-- We are going to use lualine_c and lualine_x as left and
 			-- right section. Both are highlighted by c theme .  So we
 			-- are just setting default looks o statusline
-			normal = { c = {fg = colors.fg, bg = colors.bg_dark}},
+			normal = { c = { fg = colors.fg, bg = colors.bg_statusline } },
 			inactive = {
 				a = { bg = colors.bg_statusline, fg = colors.blue },
 				b = { bg = colors.bg_statusline, fg = colors.fg_gutter, gui = "bold" },
@@ -176,14 +180,14 @@ ins_left {
 
 ins_left {
 	'filetype',
-	format = function() return " " end,
+	format = function() return ' ' end,
 	right_padding = 0,
 }
 
 ins_left {
 	function()
-		local dirname = vim.fn.expand('%:h') .. '/'
-		return dirname
+		local dirname = vim.fn.expand('%:h')
+		if dirname ~= '.' then return dirname .. '/' end
 	end,
 	condition = conditions.buffer_not_empty,
 	color = {fg = colors.blue, gui = 'bold'},
@@ -197,30 +201,50 @@ ins_left {
 	path = 0,
 	symbols = {modified = ' ', readonly = ' '},
 	color = {fg = colors.fg, gui = 'bold'},
-	left_padding=0
+	left_padding = 0
 }
 
 ins_left {
 	'location',
-	color = {fg = colors.dark3, gui = 'bold'}
+	color = {fg = colors.dark3}
 }
 
 ins_left {
 	'progress',
-	color = {fg = colors.dark3, gui = 'bold'},
+	color = {fg = colors.dark3},
+}
+
+ins_right {
+	'diagnostics',
+	sources = {'nvim_lsp'},
+	symbols = {error = ' ', warn = ' ', info= ' '},
+	color_error = colors.red,
+	color_warn = colors.yellow,
+	color_info = colors.cyan,
+}
+
+ins_right {
+	'diff',
+	symbols = { added = " ", modified = " ", removed  = " " },
+	color_added = colors.green,
+	color_modified = colors.yellow,
+	color_removed = colors.red,
+	condition = conditions.hide_in_width,
+	left_padding = 0,
 }
 
 ins_right {
 	'fileformat',
 	icons_enabled = false,
-	color = {fg = colors.dark3, gui = 'bold'},
+	color = { fg = colors.dark3 },
+	condition = conditions.hide_in_width,
 }
 
 ins_right {
 	'o:encoding', -- option component same as &encoding in viml
-	upper = true, -- upper case
+	upper = false, -- upper/lower case
 	condition = conditions.hide_in_width,
-	color = {fg = colors.dark3, gui = 'bold'}
+	color = { fg = colors.dark3 }
 }
 
 ins_right {
@@ -232,18 +256,8 @@ ins_right {
 }
 
 ins_right {
-	'diff',
-	symbols = { added = " ", modified = " ", removed  = " " },
-	color_added = colors.green,
-	color_modified = colors.orange,
-	color_removed = colors.red,
-	condition = conditions.hide_in_width
-}
-
-ins_right {
 	-- Lsp server name .
 	function ()
-		-- local msg = 'none'
 		local msg = ''
 		local buf_ft = vim.api.nvim_buf_get_option(0,'filetype')
 		local clients = vim.lsp.get_active_clients()
@@ -257,17 +271,8 @@ ins_right {
 		return msg
 	end,
 	icon = '',
-	color = {fg = colors.cyan, gui = 'bold'},
-	-- right_padding = 0
-}
-
-ins_right {
-	'diagnostics',
-	sources = {'nvim_lsp'},
-	symbols = {error = ' ', warn = ' ', info= ' '},
-	color_error = colors.red,
-	color_warn = colors.yellow,
-	color_info = colors.cyan,
+	color = {fg = colors.magenta, gui = 'bold'},
+	right_padding = 0
 }
 
 lualine.setup(config)

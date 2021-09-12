@@ -1,4 +1,5 @@
-require('packer').startup({function()
+require('packer').startup({
+	function()
 	use 'wbthomason/packer.nvim'
 
 	use {
@@ -33,7 +34,6 @@ require('packer').startup({function()
 
 	use  {
 		'kyazdani42/nvim-web-devicons',
-		-- module = 'nvim-web-devicons',
 		config = function()
 			require('config.devicons')
 		end
@@ -44,13 +44,6 @@ require('packer').startup({function()
 		ft = { 'vim', 'lua', 'html', 'css', 'conf', 'yaml'},
 		config = function()
 			require('config.colorizer')
-		end
-	}
-
-	use {
-		'folke/tokyonight.nvim',
-		config = function()
-			require('config.tokyonight')
 		end
 	}
 
@@ -87,14 +80,23 @@ require('packer').startup({function()
 		'kristijanhusak/orgmode.nvim',
 		config = function()
 			require('config.orgmode')
-		end
+		end,
 	}
 
 	use {
 		'akinsho/org-bullets.nvim',
 		ft = 'org',
+		module = 'org-bullets',
 		config = function()
 			require('config.orgbullets')
+		end
+	}
+
+	use {
+		"lukas-reineke/headlines.nvim",
+		ft = {'org', 'markdown'},
+		config = function()
+			require('config.headlines')
 		end
 	}
 
@@ -105,22 +107,6 @@ require('packer').startup({function()
 			require('config.iron')
 		end
 	}
-
-	-- use {
-	-- 	'hrsh7th/nvim-compe',
-	-- 	event = "InsertEnter",
-	-- 	config = function()
-	-- 		require('config.compe')
-	-- 	end
-	-- }
-
-	-- use {
-	-- 	'hrsh7th/vim-vsnip',
-	-- 	event = "InsertEnter",
-	-- 	config = function()
-	-- 		require('config.vsnip')
-	-- 	end
-	-- }
 
 	use {
 		'L3MON4D3/LuaSnip',
@@ -170,8 +156,15 @@ require('packer').startup({function()
 	}
 
 	use {
+		'folke/tokyonight.nvim',
+		config = function()
+			require('config.tokyonight')
+		end
+	}
+
+	use {
 		'plasticboy/vim-markdown',
-		ft = 'markdown',
+		ft = {'markdown', 'rmd'},
 		setup = function()
 			require('config.markdown')
 		end
@@ -193,8 +186,6 @@ require('packer').startup({function()
 	use 'romainl/vim-cool'
 	use 'wellle/targets.vim'
 	use 'tommcdo/vim-exchange'
-	-- use 'tommcdo/vim-lion'
-
 end,
 	config = {
 		-- opt_default = true, -- Default to using opt (as opposed to start) plugins

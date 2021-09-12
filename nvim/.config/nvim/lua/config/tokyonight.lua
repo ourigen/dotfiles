@@ -3,4 +3,6 @@ vim.g.tokyonight_colors = {
 	border_highlight = 'fg_gutter'
 }
 
-require("tokyonight").colorscheme()
+-- For some reason, calling colorscheme() has loading issues compared to vim.cmd
+-- require("tokyonight").colorscheme()
+vim.cmd[[colorscheme tokyonight]]
