@@ -53,7 +53,7 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # Use color specificatins set up for ls
 
 # Enable keyboard navigation of completions in menu (start menu only if list doesn’t fit the screen)
-zstyle ':completion:*' menu select=long
+zstyle ':completion:*' menu select=5
 # Make completion:
 # - Try exact (case-sensitive) match first.
 # - Then fall back to case-insensitive.
@@ -192,8 +192,8 @@ function git() {
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
-function set_win_title() {
-	echo -ne "\033]0;${USER}@${HOST}: ${PWD/#$HOME/~} - Alacritty\007"
-}
+# function set_win_title() {
+# 	echo -ne "\033]0;${USER}@${HOST}: ${PWD/#$HOME/~} - Alacritty\007"
+# }
 
-precmd_functions+=(set_win_title)
+# precmd_functions+=(set_win_title)

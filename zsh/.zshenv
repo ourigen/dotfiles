@@ -13,7 +13,7 @@ path=(
 )
 export PATH
 
-# export TERM="xterm-256color"
+export TERM="xterm-256color"
 export VISUAL="nvim"
 export EDITOR="$VISUAL"
 export BROWSER="firefox"
@@ -31,9 +31,13 @@ export TEXMFHOME="$XDG_DATA_HOME/texmf"
 export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
 export TEXMFCONFIG="$XDG_CONFIG_HOME/texlive/texmf-config"
 
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_DBUS_REMOTE=1
+
+
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --prompt="> " --pointer="-" --marker="+" --info=inline
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --prompt="› " --pointer="-" --marker="+" --info=inline
 --bind ctrl-y:preview-up,ctrl-e:preview-down
 --bind up:preview-up,down:preview-down
 --color=fg:#c0caf5,bg:#24283b,hl:#7aa2f7
@@ -49,10 +53,7 @@ export NNN_PLUG='p:preview-tui;f:fzcd;a:autojump;b:bulknew;x:xdgdefault;m:mtpmou
 export NNN_FCOLORS='04030402070506080b090d01'
 export NNN_TRASH=1
 export NNN_FIFO='/tmp/nnn.fifo'
-export NNN_BMS="w:~/pictures/wallpapers;p:~/projects;d:~/downloads;s:/mnt/srvshare/;c:~/courses;u:/run/media/arch/"
-
-export MOZ_ENABLE_WAYLAND=1
-export MOZ_DBUS_REMOTE=1
+export NNN_BMS="w:~/pictures/wallpapers;p:~/projects;d:~/downloads;c:~/sync/Documents;u:/run/media/arch/"
 
 export BAT_THEME="base16"
 # export QT_PLUGIN_PATH=/usr/lib/qt/plugins

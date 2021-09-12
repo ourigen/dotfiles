@@ -1,10 +1,9 @@
-// vim: ft=json cms=//\ %s
+// vim: cms=//\ %s
 {
-	"layer": "bottom",  // changing to "top" affects bemenu display
+	"layer": "bottom",
 	"position": "top",
-	// "exclusive": false,
 	"height": 20,
-	// "width": 1280, // Leave blank for dynamic
+	// "width": 1920, // Comment for dynamic width
 
 	"modules-left": [
 		"sway/workspaces",
@@ -78,7 +77,6 @@
 		"format-disconnected": "",
 		"on-click": "mpc --quiet toggle",
 		"on-click-right": "setsid alacritty -e ncmpcpp",
-		// "on-click-right": "cantata",
 		"on-click-middle": "mpc --quiet stop",
 		"on-scroll-up": "mpc --quiet prev",
 		"on-scroll-down": "mpc --quiet next",
@@ -113,7 +111,6 @@
 		"format-charging": "<span foreground='#f7768e'>{icon}</span> {capacity}%",
 		"format-time": "{H}h {M}m",
 		"format-icons": ["", "", "", "", "", ""]
-		// "format-icons": ["     ", "     ", "     ", "     ", "     ", "      "]
 	},
 
 	"tray": {

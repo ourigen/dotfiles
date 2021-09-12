@@ -5,7 +5,7 @@ set -e
 # Command configuration
 CUSTOM_CMD="${CUSTOM_CMD:-"clear"}"
 MPD_CMD="${MPD_CMD:-"mpc -q toggle"}"
-NOTIFY_CMD="${NOTIFY_CMD:-"notify-send \"gtd\""}"
+NOTIFY_CMD="${NOTIFY_CMD:-"notify-send \"Pomodoro\""}"
 SPEAK_CMD="${SPEAK_CMD:-"&>/dev/null espeak"}"
 
 # Setting configuration

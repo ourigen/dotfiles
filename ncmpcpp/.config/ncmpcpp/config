@@ -223,13 +223,14 @@ message_delay_time = 3
 
 ## Note: colors can be nested.
 
+# Old format: Song - ﴁ Artist             Album | Time
 # song_list_format = {{%t}{ - $3ﴁ$9 %a}}|{$8%f$9}$R{$6$9 %b $8|$9 }{$7%l$9}
-song_list_format = {{%t}{ - $3ﴁ$9 %a}}|{$8%f$9}$R{$7%l$9}
+song_list_format = {{%t}{ - $3ﴁ$9 %a}}|{$8%f$9}$R{%l}
 
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
 # song_status_format = {{%t} - {%a{ "%b"}}}|{%f}
-# Playing: Song // Artist // Album
-song_status_format = {{$5%t$9} | {$3%a$9{ | $4%b$9}}}|{$5%f$9}
+# Playing: Song › Artist › Album
+song_status_format = {{$5%t$9} › {$3%a$9{ › $4%b$9}}}|{$5%f$9}
 
 #song_library_format = {%n - }{%t}|{%f}
 
@@ -239,7 +240,6 @@ song_status_format = {{$5%t$9} | {$3%a$9{ | $4%b$9}}}|{$5%f$9}
 
 current_item_prefix = $(yellow)$b
 
-#current_item_suffix = $/r$(end)
 current_item_suffix = $/b$(end)
 
 #current_item_inactive_column_prefix = $(white)$r
@@ -462,7 +462,7 @@ header_visibility = yes
 
 #clock_display_seconds = no
 
-#display_volume_level = yes
+display_volume_level = no
 
 #display_bitrate = no
 
@@ -563,7 +563,7 @@ header_window_color = white
 
 volume_color = white
 
-state_line_color = blue
+state_line_color = blue:b
 
 state_flags_color = default:b
 
@@ -573,16 +573,15 @@ main_window_color = default
 
 #color2 = green
 
-# progressbar_color = black:b
-progressbar_color = 9
+progressbar_color = 9:b
 
 progressbar_elapsed_color = blue:b
 
 #statusbar_color = default
 
-#statusbar_time_color = default:b
+statusbar_time_color = 9:b
 
-#player_state_color = default:b
+# player_state_color = default:b
 
 #alternative_ui_separator_color = black:b
 

@@ -23,7 +23,7 @@ set {
 
 	$term alacritty
 
-	$inner_gaps 5
+	$inner_gaps 3
 	$outer_gaps 5
 
 	$laptop eDP-1
@@ -38,12 +38,13 @@ gaps {
 # OUTPUT
 # swaymsg -t get_outputs
 
-output * background $HOME/pictures/wallpapers/tokyonight/tokyonight_topography.jpg fill
+output * background $HOME/pictures/wallpapers/tokyonight/tokyonight-topography.jpg fill
 
 output $laptop {
 	resolution 1920x1080
 	position 0,1080
 }
+
 output $monitor {
 	resolution 1920x1080
 	position 0,0
@@ -115,7 +116,6 @@ bar swaybar_command waybar
 
 # Window borders
 default_border pixel 1
-# disable border for windows spwaned in floating mode (cleaner popup menus)
 default_floating_border none
 titlebar_border_thickness 0
 title_align center
@@ -135,12 +135,10 @@ client.urgent           $yellow      $black      $white  $red        $red
 
 # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
 # set $gnome-schema org.gnome.desktop.interface
-# exec_always {
-	# gsettings set $gnome-schema icon-theme 'Qogir-dark'
-	# gsettings set $gnome-schema cursor-theme 'Qogir-cursors'
-	# gsettings set $gnome-schema gtk-theme 'Qogir-dark'
-	# gsettings set $gnome-schema font-name 'Iosevka Nerd Font Mono 10'
-# }
+exec_always {
+	gsettings set $gnome-schema gtk-theme 'Qogir-dark'
+	gsettings set $gnome-schema font-name 'Iosevka Nerd Font Mono 10'
+}
 
 # BINDINGS {{{
 
